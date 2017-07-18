@@ -1,0 +1,40 @@
+{
+  "extends": [
+    "react-app",
+    "airbnb"
+  ],
+  "rules": {
+    "class-methods-use-this": [
+      "error", {
+        "exceptMethods": [
+          "componentDidMount",
+          "componentDidUpdate",
+          "componentWillMount",
+          "componentWillReceiveProps",
+          "componentWillUnmount",
+          "componentWillUpdate",
+          "render",
+          "shouldComponentUpdate"
+        ]
+      }
+    ],
+    "semi": ["warn", "never"],
+    "arrow-parens": ["error", "as-needed"],
+    "no-unused-expressions": "off",
+    "no-underscore-dangle": "off",
+    "react/jsx-uses-vars": "warn",
+    "react/prefer-stateless-function": [
+      "error", {
+        "ignorePureComponents": true
+      }
+    ],
+    "object-shorthand": "warn",
+    "import/no-named-as-default": "off",
+    "react/jsx-filename-extension": [
+      "error", {
+        "extensions": [".jsx", ".js"]
+      }
+    ],
+    "react/forbid-prop-types": "off"
+  }
+}
