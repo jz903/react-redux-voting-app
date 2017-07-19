@@ -7,10 +7,11 @@
     "express": "4.13.3"
   },
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "node server.js",
-    "client": "node start-client.js",
-    "dev": "echo \"This command has been deprecated. Use 'npm start'\" && exit 1",
+    "start": "concurrently \"npm run start-client\" \"npm run api\"",
+    "server": "concurrently \"npm run build-client\" \"NODE_ENV=production npm run api\"",
+    "api": "node api.js",
+    "start-client": "node start-client.js",
+    "build-client": "node build-client.js",
     "lint": "eslint .",
     "precommit": "lint-staged"
   },
