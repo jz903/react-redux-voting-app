@@ -1,9 +1,13 @@
 import React from 'react'
+import { func } from 'prop-types'
 import { Input, Button, Checkbox, Form, Segment } from 'semantic-ui-react'
+import { Field, reduxForm } from 'redux-form'
 
 import './SignIn.css'
 
-const SignIn = () => (
+const SignIn = ({
+  handleSubmit,
+}) => (
   <div className="main-wrapper ui middle aligned center aligned grid">
     <div className="column">
       <Segment stacked>
@@ -13,12 +17,26 @@ const SignIn = () => (
             Log-in to your account
           </div>
         </h2>
-        <Form className="ui large form">
+        <Form className="ui large form" onSubmit={handleSubmit}>
           <Form.Field>
-            <Input icon="mail" iconPosition="left" placeholder="E-mail address" />
+            <Field
+              icon="mail"
+              iconPosition="left"
+              name="email"
+              component={Input}
+              type="email"
+              placeholder="E-mail address"
+            />
           </Form.Field>
           <Form.Field>
-            <Input icon="lock" iconPosition="left" placeholder="Password" />
+            <Field
+              icon="lock"
+              iconPosition="left"
+              name="password"
+              component={Input}
+              type="password"
+              placeholder="Password"
+            />
           </Form.Field>
           <Form.Field className="remember-field">
             <Checkbox label="Remember me" />
@@ -30,4 +48,15 @@ const SignIn = () => (
   </div>
 )
 
-export default SignIn
+SignIn.propTypes = {
+  handleSubmit: func,
+}
+
+SignIn.defaultProps = {
+  handleSubmit: () => {},
+}
+
+export default reduxForm({
+  // a unique name for the form
+  form: 'signin',
+})(SignIn)
