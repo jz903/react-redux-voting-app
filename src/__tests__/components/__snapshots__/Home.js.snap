@@ -10,7 +10,7 @@ exports[`Home component should render right thing and don't change unexpected 1`
     <img
       alt="logo"
       className="App-logo"
-      src="logo.svg"
+      src="/assets/images/logo.svg"
     />
     <h2>
       Welcome 
