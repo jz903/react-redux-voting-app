@@ -14,8 +14,11 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "react-scripts": "1.0.10",
     "redux": "^3.7.2",
+    "redux-form": "^7.0.1",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "semantic-ui-css": "^2.2.11",
+    "semantic-ui-react": "^0.71.1"
   },
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"npm run api\"",

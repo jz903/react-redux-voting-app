@@ -3,8 +3,10 @@ import { object } from 'prop-types'
 import { Provider } from 'react-redux'
 import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
+import 'semantic-ui-css/semantic.min.css'
 
 import Home from './Home'
+import SignIn from './SignIn'
 
 const Root = ({ store, history }) =>
   (
@@ -13,6 +15,7 @@ const Root = ({ store, history }) =>
       <ConnectedRouter history={history}>
         <div>
           <Route exact path="/" component={Home} />
+          <Route path="/login" component={SignIn} />
         </div>
       </ConnectedRouter>
     </Provider>

@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import { object } from 'prop-types'
-import logo from '../logo.svg'
 import './Home.css'
 
 class Home extends PureComponent {
@@ -14,7 +13,7 @@ class Home extends PureComponent {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src="/assets/images/logo.svg" className="App-logo" alt="logo" />
           <h2>
             Welcome {name} to React
           </h2>
