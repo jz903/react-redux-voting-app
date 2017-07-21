@@ -1,10 +1,10 @@
-import React from "react";
-import { object } from "prop-types";
-import { Provider } from "react-redux";
-import { Route } from "react-router";
-import { ConnectedRouter } from "react-router-redux";
+import React from 'react'
+import { object } from 'prop-types'
+import { Provider } from 'react-redux'
+import { Route } from 'react-router'
+import { ConnectedRouter } from 'react-router-redux'
 
-import Home from "./Home";
+import Home from './Home'
 
 const Root = ({ store, history }) =>
   <Provider store={store}>
@@ -14,11 +14,11 @@ const Root = ({ store, history }) =>
         <Route exact path="/" component={Home} />
       </div>
     </ConnectedRouter>
-  </Provider>;
+  </Provider>
 
 Root.propTypes = {
   store: object.isRequired,
-  history: object.isRequired
-};
+  history: object.isRequired,
+}
 
-export default Root;
+export default Root

@@ -2,32 +2,49 @@
   "name": "fcc-voting-app",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001/",
   "dependencies": {
     "babel-core": "6.14.0",
-    "express": "4.13.3"
+    "express": "4.13.3",
+    "history": "^4.6.3",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.2",
+    "react-router-redux": "^5.0.0-alpha.6",
+    "react-scripts": "1.0.10",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
-    "start": "concurrently \"npm run start-client\" \"npm run api\"",
-    "server": "concurrently \"npm run build-client\" \"NODE_ENV=production npm run api\"",
+    "start": "concurrently \"react-scripts start\" \"npm run api\"",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "server": "concurrently \"npm run build\" \"NODE_ENV=production npm run api\"",
     "api": "node api.js",
-    "start-client": "node start-client.js",
-    "build-client": "node build-client.js",
     "lint": "eslint .",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prepush": "npm run lint && npm test"
   },
   "devDependencies": {
     "concurrently": "3.1.0",
+    "enzyme": "^2.9.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.2",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
     "husky": "^0.14.3",
     "lint-staged": "^4.0.2",
-    "prettier": "^1.5.3"
+    "prettier": "^1.5.3",
+    "react-test-renderer": "^15.6.1"
   },
   "lint-staged": {
     "*.js": [
-      "prettier --write",
+      "prettier --single-quote --trailing-comma all --no-semi --write",
       "git add"
     ]
   }
