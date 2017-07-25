@@ -1,4 +1,4 @@
-import { CALL_API } from '../middleware/api'
+import { CALL_API, Schemas } from '../middleware/api'
 
 export const SIGNIN_REQUEST = 'SIGNIN_REQUEST'
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS'
@@ -12,6 +12,7 @@ export const signIn = payload => ({
     endpoint: '/api/user',
     method: 'POST',
     payload,
+    schema: Schemas.USER,
   },
 })
 

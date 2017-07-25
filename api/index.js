@@ -11,6 +11,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.get('/api/user', (req, res) => {
   res.json({
+    id: 001,
     name: 'chris zhou',
     create_at: new Date(),
   })
@@ -18,6 +19,7 @@ app.get('/api/user', (req, res) => {
 
 app.post('/api/user', (req, res) => {
   res.json({
+    id: 001,
     name: 'chris zhou',
     create_at: new Date(),
   })

@@ -4,16 +4,16 @@ import { reducer as formReducer } from 'redux-form'
 
 import * as ActionTypes from '../actions'
 
-const user = (state = {}, action) => {
-  switch (action.type) {
-    case ActionTypes.SIGNIN_SUCCESS:
-      return {
-        ...state,
-        ...action.response,
-      }
-    default:
-      return state
+// Updates an entity cache in response to any action with response.entities.
+const entities = (state = { users: {} }, action) => {
+  if (action.response && action.response.entities) {
+    return {
+      ...state,
+      ...action.response.entities,
+    }
   }
+
+  return state
 }
 
 // Updates error message to notify about the failed fetches.
@@ -30,7 +30,7 @@ const errorMessage = (state = null, action) => {
 }
 
 const rootReducer = combineReducers({
-  user,
+  entities,
   errorMessage,
   router: routerReducer,
   form: formReducer,
