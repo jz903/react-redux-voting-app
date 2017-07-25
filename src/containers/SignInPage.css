@@ -1,0 +1,12 @@
+.main-wrapper {
+  min-height: 100vh;
+}
+.image {
+  margin-top: -100px;
+}
+.column {
+  max-width: 600px;
+}
+.ui.stacked.segment {
+  padding: 2em;
+}

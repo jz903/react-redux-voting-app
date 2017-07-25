@@ -4,6 +4,8 @@ import createHistory from 'history/createBrowserHistory'
 import Root from './containers/Root'
 import configureStore from './store/configureStore'
 
+import './index.css'
+
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory()
 

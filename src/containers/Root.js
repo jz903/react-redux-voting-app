@@ -5,8 +5,8 @@ import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import 'semantic-ui-css/semantic.min.css'
 
-import Home from './Home'
-import SignIn from './SignIn'
+import Home from './HomePage'
+import SignIn from './SignInPage'
 
 const Root = ({ store, history }) =>
   (
