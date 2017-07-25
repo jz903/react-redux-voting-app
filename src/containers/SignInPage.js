@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { func } from 'prop-types'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { Segment } from 'semantic-ui-react'
 import * as actions from '../actions'
 import SignInForm from '../components/SignInForm'
@@ -31,6 +32,9 @@ class SignInPage extends PureComponent {
             </h2>
             <SignInForm onSubmit={this.handleSubmit} />
           </Segment>
+          <div className="ui message">
+            New to us? <Link to="/join">Sign Up</Link>
+          </div>
         </div>
       </div>
     )
