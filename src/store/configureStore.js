@@ -4,6 +4,7 @@ import createHistory from 'history/createBrowserHistory'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import rootReducer from '../reducers'
+import api from '../middleware/api'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -15,7 +16,7 @@ const configureStore = preloadedState => {
     rootReducer,
     preloadedState,
     composeEnhancers(
-      applyMiddleware(routerMiddleware(history), thunk, createLogger()),
+      applyMiddleware(routerMiddleware(history), thunk, api, createLogger()),
     ),
   )
 

@@ -1,14 +1,18 @@
 import React, { PureComponent } from 'react'
+import { func } from 'prop-types'
 import { connect } from 'react-redux'
+import * as actions from '../actions'
 import SignIn from '../components/SignIn'
 
-const mapStateToProps = state => ({
-  user: state.user,
-})
-
 class SignInPage extends PureComponent {
+  static propTypes = {
+    signIn: func.isRequired,
+  }
+
   handleSubmit = values => {
-    console.log(values) // eslint-disable-line
+    const { signIn } = this.props
+
+    signIn(values)
   }
 
   render() {
@@ -18,4 +22,14 @@ class SignInPage extends PureComponent {
   }
 }
 
-export default connect(mapStateToProps, {})(SignInPage)
+const mapStateToProps = state => ({
+  user: state.user,
+})
+
+const mapDispatchToProps = dispatch => ({
+  signIn: data => {
+    dispatch(actions.signIn(data))
+  },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignInPage)
