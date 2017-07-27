@@ -4,6 +4,7 @@ import { camelizeKeys } from 'humps'
 // Fetches an API response.
 // This makes every API response have the same shape, regardless of how nested it was.
 const callApi = ({ endpoint, method, payload }, schema) => {
+  const url = `/api${endpoint}`
   const config = {
     method: method || 'GET',
     body: JSON.stringify(payload),
@@ -13,7 +14,7 @@ const callApi = ({ endpoint, method, payload }, schema) => {
     config.body = null
   }
 
-  return fetch(endpoint, config)
+  return fetch(url, config)
     .then(response =>
       response.json().then(json => {
         if (!response.ok) {

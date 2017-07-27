@@ -9,7 +9,7 @@ export const SIGNIN_FAILURE = 'SIGNIN_FAILURE'
 export const signIn = payload => ({
   [CALL_API]: {
     types: [SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE],
-    endpoint: '/api/user',
+    endpoint: '/user',
     method: 'POST',
     payload,
     schema: Schemas.USER,
