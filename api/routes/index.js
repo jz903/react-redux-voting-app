@@ -13,7 +13,8 @@ const successCallback = (req, res) => {
 
 router.get('/user', (req, res) => {
   if (req.user) {
-    const { _id, rest } = req.user
+    const { _doc } = req.user
+    const { _id, __v, ...rest } = _doc
 
     res.json({
       id: _id,
