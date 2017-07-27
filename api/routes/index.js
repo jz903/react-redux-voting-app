@@ -13,7 +13,12 @@ const successCallback = (req, res) => {
 
 router.get('/user', (req, res) => {
   if (req.user) {
-    res.json(req.user)
+    const { _id, rest } = req.user
+
+    res.json({
+      id: _id,
+      ...rest,
+    })
   } else {
     res.status(401).send({
       error: 'NotSignIn',

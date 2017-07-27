@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
-import createHistory from 'history/createBrowserHistory'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import rootReducer from '../reducers'
@@ -8,13 +7,9 @@ import api from '../middleware/api'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-// Create a history of your choosing (we're using a browser history in this case)
-const history = createHistory()
-
-const configureStore = preloadedState => {
+const configureStore = history => {
   const store = createStore(
     rootReducer,
-    preloadedState,
     composeEnhancers(
       applyMiddleware(routerMiddleware(history), thunk, api, createLogger()),
     ),

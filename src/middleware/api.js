@@ -1,3 +1,4 @@
+import { push } from 'react-router-redux'
 import { normalize, schema } from 'normalizr'
 import { camelizeKeys } from 'humps'
 
@@ -98,9 +99,14 @@ export default store => next => action => {
       response,
       type: successType,
     })),
-    error => next(actionWith({
-      type: failureType,
-      error: error.message || 'Something bad happened',
-    })),
+    error => {
+      if (error.error === 'NotSignIn') {
+        store.dispatch(push('/login'))
+      }
+      next(actionWith({
+        type: failureType,
+        error: error.error || 'Something bad happened',
+      }))
+    },
   )
 }

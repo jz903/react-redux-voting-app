@@ -9,7 +9,7 @@ import './index.css'
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory()
 
-const store = configureStore()
+const store = configureStore(history)
 
 render(
   <Root store={store} history={history} />,

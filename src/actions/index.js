@@ -1,5 +1,33 @@
 import { CALL_API, Schemas } from '../middleware/api'
 
+const blackListToFetchUser = ['/login', '/signup']
+export const FEATCH_USER_REQUEST = 'FEATCH_USER_REQUEST'
+export const FEATCH_USER_SUCCESS = 'FEATCH_USER_SUCCESS'
+export const FEATCH_USER_FAILURE = 'FEATCH_USER_FAILURE'
+
+// fetch user request
+// Relies on the custom API middleware defined in ../middleware/api.js.
+export const fetchUserRequest = () => ({
+  [CALL_API]: {
+    types: [FEATCH_USER_REQUEST, FEATCH_USER_SUCCESS, FEATCH_USER_FAILURE],
+    endpoint: '/user',
+    schema: Schemas.USER,
+  },
+})
+
+export const fetchUser = () => (dispatch, getState) => {
+  const { pathname } = getState().router.location
+
+  if (blackListToFetchUser.indexOf(pathname) === -1) {
+    dispatch(fetchUserRequest())
+      // .then(({ error }) => {
+      //   if (error === 'NotSignIn') {
+      //     dispatch(replace('/login'))
+      //   }
+      // })
+  }
+}
+
 export const SIGNIN_REQUEST = 'SIGNIN_REQUEST'
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS'
 export const SIGNIN_FAILURE = 'SIGNIN_FAILURE'
@@ -9,7 +37,7 @@ export const SIGNIN_FAILURE = 'SIGNIN_FAILURE'
 export const signIn = payload => ({
   [CALL_API]: {
     types: [SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE],
-    endpoint: '/user',
+    endpoint: '/login',
     method: 'POST',
     payload,
     schema: Schemas.USER,

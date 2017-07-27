@@ -4,6 +4,8 @@ import { reducer as formReducer } from 'redux-form'
 
 import * as ActionTypes from '../actions'
 
+const user = (state = {}) => state
+
 // Updates an entity cache in response to any action with response.entities.
 const entities = (state = { users: {} }, action) => {
   if (action.response && action.response.entities) {
@@ -30,6 +32,7 @@ const errorMessage = (state = null, action) => {
 }
 
 const rootReducer = combineReducers({
+  user,
   entities,
   errorMessage,
   router: routerReducer,
