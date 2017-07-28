@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const path = require('path')
 const passport = require('passport')
 const cookieParser = require('cookie-parser')
@@ -12,6 +13,7 @@ const dbUrl = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/fcc-voting'
 
 mongoose.connect(dbUrl)
 
+app.use(cors())
 app.set('port', process.env.PORT || 3001)
 
 // Express only serves static assets in production

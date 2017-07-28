@@ -9,6 +9,7 @@ const callApi = ({ endpoint, method, payload }, schema) => {
   const config = {
     method: method || 'GET',
     body: JSON.stringify(payload),
+    credentials: 'include', // send a request with credentials included, send cookies to Passport to confirm session
   }
 
   if (config.method === 'GET' || config.method === 'DELETE') {
