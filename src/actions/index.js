@@ -4,6 +4,12 @@ const blackListToFetchUser = ['/login', '/signup']
 export const FEATCH_USER_REQUEST = 'FEATCH_USER_REQUEST'
 export const FEATCH_USER_SUCCESS = 'FEATCH_USER_SUCCESS'
 export const FEATCH_USER_FAILURE = 'FEATCH_USER_FAILURE'
+export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER'
+
+export const updateCurrentUser = user => ({
+  type: UPDATE_CURRENT_USER,
+  user,
+})
 
 // fetch user request
 // Relies on the custom API middleware defined in ../middleware/api.js.
@@ -20,11 +26,11 @@ export const fetchUser = () => (dispatch, getState) => {
 
   if (blackListToFetchUser.indexOf(pathname) === -1) {
     dispatch(fetchUserRequest())
-      // .then(({ error }) => {
-      //   if (error === 'NotSignIn') {
-      //     dispatch(replace('/login'))
-      //   }
-      // })
+      .then(({ response: { result } }) => {
+        dispatch(updateCurrentUser({
+          id: result,
+        }))
+      })
   }
 }
 

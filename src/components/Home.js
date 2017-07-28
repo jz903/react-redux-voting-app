@@ -9,7 +9,7 @@ class Home extends PureComponent {
 
   render() {
     const { user } = this.props
-    const name = (user && user.name) || ''
+    const name = (user && user.displayName) || ''
     return (
       <div className="App">
         <div className="App-header">

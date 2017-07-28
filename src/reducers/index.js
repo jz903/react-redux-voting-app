@@ -4,7 +4,17 @@ import { reducer as formReducer } from 'redux-form'
 
 import * as ActionTypes from '../actions'
 
-const user = (state = {}) => state
+const user = (state = {}, action) => {
+  switch (action.type) {
+    case ActionTypes.UPDATE_CURRENT_USER:
+      return {
+        ...state,
+        ...action.user,
+      }
+    default:
+      return state
+  }
+}
 
 // Updates an entity cache in response to any action with response.entities.
 const entities = (state = { users: {} }, action) => {
