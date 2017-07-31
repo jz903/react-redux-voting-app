@@ -25,9 +25,9 @@ const callApi = ({ endpoint, method, payload }, schema) => {
 
         const camelizedJson = camelizeKeys(json)
 
-        return {
+        return schema ? {
           ...normalize(camelizedJson, schema),
-        }
+        } : camelizedJson
       }),
     )
 }
@@ -75,9 +75,6 @@ export default store => next => action => {
 
   if (typeof endpoint !== 'string') {
     throw new Error('Specify a string endpoint URL.')
-  }
-  if (!schema) {
-    throw new Error('Specify one of the exported Schemas.')
   }
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected an array of three action types.')

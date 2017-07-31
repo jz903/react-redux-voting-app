@@ -26,7 +26,9 @@ export const fetchUser = () => (dispatch, getState) => {
 
   if (blackListToFetchUser.indexOf(pathname) === -1) {
     dispatch(fetchUserRequest())
-      .then(({ response: { result } }) => {
+      .then(data => {
+        const result = data && data.response.result
+
         dispatch(updateCurrentUser({
           id: result,
         }))
@@ -47,6 +49,19 @@ export const signIn = payload => ({
     method: 'POST',
     payload,
     schema: Schemas.USER,
+  },
+})
+
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
+
+// sign in request
+// Relies on the custom API middleware defined in ../middleware/api.js.
+export const logout = () => ({
+  [CALL_API]: {
+    types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE],
+    endpoint: '/logout',
   },
 })
 
