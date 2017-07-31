@@ -8,6 +8,7 @@ import 'semantic-ui-css/semantic.min.css'
 import * as actions from '../actions'
 import Home from './HomePage'
 import SignIn from './SignInPage'
+import SignUp from './SignUpPage'
 import Logout from './LogoutPage'
 
 class Root extends PureComponent {
@@ -31,6 +32,7 @@ class Root extends PureComponent {
           <div>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={SignIn} />
+            <Route path="/join" component={SignUp} />
             <Route path="/logout" component={Logout} />
           </div>
         </ConnectedRouter>

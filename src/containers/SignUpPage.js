@@ -4,19 +4,18 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Segment } from 'semantic-ui-react'
 import * as actions from '../actions'
-import SignInForm from '../components/SignInForm'
+import { API_URL } from '../constants'
+import SignUpForm from '../components/SignUpForm'
 
-import './SignInPage.css'
-
-class SignInPage extends PureComponent {
+class SignUpPage extends PureComponent {
   static propTypes = {
-    signIn: func.isRequired,
+    signUp: func.isRequired,
   }
 
   handleSubmit = values => {
-    const { signIn } = this.props
+    const { signUp } = this.props
 
-    signIn(values)
+    signUp(values)
   }
 
   render() {
@@ -27,14 +26,14 @@ class SignInPage extends PureComponent {
             <h2 className="ui image header">
               <img src="/assets/images/logo.svg" className="image" alt="logo" />
               <div className="content">
-                Login to your account
+                Sign up your account
               </div>
             </h2>
-            <SignInForm onSubmit={this.handleSubmit} />
+            <SignUpForm onSubmit={this.handleSubmit} />
           </Segment>
           <div className="ui message">
-            New to us? <Link to="/join">Sign Up</Link> <br />
-            <a href="http://localhost:3001/api/auth/github">Login with Github account</a>
+            Has an account? <Link to="/login">Sign In</Link> <br />
+            <a href={`${API_URL}/auth/github`}>Login with Github account</a>
           </div>
         </div>
       </div>
@@ -43,9 +42,9 @@ class SignInPage extends PureComponent {
 }
 
 const mapDispatchToProps = dispatch => ({
-  signIn: data => {
-    dispatch(actions.signIn(data))
+  signUp: data => {
+    dispatch(actions.signUp(data))
   },
 })
 
-export default connect(null, mapDispatchToProps)(SignInPage)
+export default connect(null, mapDispatchToProps)(SignUpPage)

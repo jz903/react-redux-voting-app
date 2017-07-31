@@ -1,6 +1,6 @@
 const express = require('express')
-const passportGithub = require('../auth/github')
-const passportLocal = require('../auth/local')
+const passport = require('passport')
+const passportGithub = require('../socialAuth/github')
 const User = require('../models/user')
 
 const router = express.Router()
@@ -27,24 +27,107 @@ router.get('/user', (req, res) => {
   }
 })
 
-router.post('/register', (req, res) => {
-  const { username, password } = req.body
-  const newUser = User({
-    username,
-    password,
-  })
+router.post('/register', (req, res, next) => {
+  let { username, password, email, displayName } = req.body
 
-  newUser.save(err => {
+  username = username.trim()
+  password = password.trim()
+  email = email.trim()
+  displayName = displayName.trim()
+
+  const saveUserToDb = () => {
+    const newUser = new User({
+      username,
+      password,
+      email,
+      displayName,
+    })
+
+    newUser.save((err, user) => {
+      if (err) {
+        return res.json({
+          error: err.message,
+        })
+      }
+
+      return passport.authenticate('local')(req, res, () => {
+        req.session.save(sessionError => {
+          if (sessionError) {
+            return next(sessionError)
+          }
+          return res.json(user)
+        })
+      })
+    })
+  }
+
+  User.find({ username }, (err, users) => {
     if (err) {
-      res.send({
+      res.json({
         error: err.message,
       })
     }
-    passportLocal.authenticate('local', { failureRedirect: `${homePageUrl}login` })
-  })
-}, successCallback)
 
-router.post('/login', passportLocal.authenticate('local', { failureRedirect: `${homePageUrl}login` }), successCallback)
+    if (users.length) {
+      res.status(400).send({
+        error: 'UsernameAlreadyExists',
+      })
+    } else {
+      saveUserToDb()
+    }
+  })
+})
+
+router.post('/login', (req, res, next) => {
+  let { username, password, email, displayName } = req.body
+
+  username = username.trim()
+  password = password.trim()
+  email = email.trim()
+  displayName = displayName.trim()
+
+  const saveUserToDb = () => {
+    const newUser = new User({
+      username,
+      password,
+      email,
+      displayName,
+    })
+
+    newUser.save((err, user) => {
+      if (err) {
+        return res.json({
+          error: err.message,
+        })
+      }
+
+      return passport.authenticate('local')(req, res, () => {
+        req.session.save(sessionError => {
+          if (sessionError) {
+            return next(sessionError)
+          }
+          return res.json(user)
+        })
+      })
+    })
+  }
+
+  User.find({ username }, (err, users) => {
+    if (err) {
+      res.json({
+        error: err.message,
+      })
+    }
+
+    if (users.length) {
+      res.status(400).send({
+        error: 'UsernameAlreadyExists',
+      })
+    } else {
+      saveUserToDb()
+    }
+  })
+})
 
 router.get('/auth/github', passportGithub.authenticate('github', { scope: ['user:email'] }))
 

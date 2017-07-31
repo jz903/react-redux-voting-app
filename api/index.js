@@ -29,6 +29,7 @@ if (process.env.NODE_ENV === 'production') {
 // logging, parsing, and session handling.
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 app.use(session({
   secret: 'keyboard cat',
   resave: true,
@@ -37,7 +38,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-// handle api in routes
+// routes
 app.use('/api', routes)
 
 app.listen(app.get('port'), () => {

@@ -2,11 +2,16 @@ import { push } from 'react-router-redux'
 import { normalize, schema } from 'normalizr'
 import { camelizeKeys } from 'humps'
 
+const defaultHTTPHeaders = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+}
 // Fetches an API response.
 // This makes every API response have the same shape, regardless of how nested it was.
 const callApi = ({ endpoint, method, payload }, schema) => {
   const url = `/api${endpoint}`
   const config = {
+    headers: defaultHTTPHeaders,
     method: method || 'GET',
     body: JSON.stringify(payload),
     credentials: 'include', // send a request with credentials included, send cookies to Passport to confirm session
