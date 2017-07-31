@@ -8,8 +8,7 @@ const user = (state = {}, action) => {
   switch (action.type) {
     case ActionTypes.UPDATE_CURRENT_USER:
       return {
-        ...state,
-        ...action.user,
+        id: action.id,
       }
     default:
       return state

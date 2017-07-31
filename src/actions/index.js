@@ -1,3 +1,4 @@
+import { replace } from 'react-router-redux'
 import { CALL_API, Schemas } from '../middleware/api'
 import { BLACK_LIST_TO_FETCH_USER } from '../constants'
 
@@ -6,9 +7,9 @@ export const FEATCH_USER_SUCCESS = 'FEATCH_USER_SUCCESS'
 export const FEATCH_USER_FAILURE = 'FEATCH_USER_FAILURE'
 export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER'
 
-export const updateCurrentUser = user => ({
+export const updateCurrentUserId = id => ({
   type: UPDATE_CURRENT_USER,
-  user,
+  id,
 })
 
 // fetch user request
@@ -29,9 +30,9 @@ export const fetchUser = () => (dispatch, getState) => {
       .then(data => {
         const result = data && data.response.result
 
-        dispatch(updateCurrentUser({
-          id: result,
-        }))
+        if (result) {
+          dispatch(updateCurrentUserId(result))
+        }
       })
   }
 }
@@ -42,7 +43,7 @@ export const SIGNIN_FAILURE = 'SIGNIN_FAILURE'
 
 // sign in request
 // Relies on the custom API middleware defined in ../middleware/api.js.
-export const signIn = payload => ({
+export const signInRequest = payload => ({
   [CALL_API]: {
     types: [SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE],
     endpoint: '/login',
@@ -52,13 +53,25 @@ export const signIn = payload => ({
   },
 })
 
+export const signIn = payload => dispatch => {
+  dispatch(signInRequest(payload))
+    .then(data => {
+      const result = data && data.response.result
+
+      if (result) {
+        dispatch(updateCurrentUserId(result))
+        dispatch(replace('/'))
+      }
+    })
+}
+
 export const SIGNUP_REQUEST = 'SIGNUP_REQUEST'
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
 
-// sign in request
+// sign up request
 // Relies on the custom API middleware defined in ../middleware/api.js.
-export const signUp = payload => ({
+export const signUpRequest = payload => ({
   [CALL_API]: {
     types: [SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE],
     endpoint: '/register',
@@ -68,18 +81,39 @@ export const signUp = payload => ({
   },
 })
 
+export const signUp = payload => dispatch => {
+  dispatch(signUpRequest(payload))
+    .then(data => {
+      const result = data && data.response.result
+
+      if (result) {
+        dispatch(updateCurrentUserId(result))
+        dispatch(replace('/'))
+      }
+    })
+}
+
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
 
-// sign in request
+// logout request
 // Relies on the custom API middleware defined in ../middleware/api.js.
-export const logout = () => ({
+export const logoutRequest = () => ({
   [CALL_API]: {
     types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE],
     endpoint: '/logout',
   },
 })
+
+export const logout = () => dispatch => {
+  dispatch(logoutRequest())
+    .then(data => {
+      if (data && data.type === LOGOUT_SUCCESS) {
+        dispatch(replace('/login'))
+      }
+    })
+}
 
 export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE'
 

@@ -6,10 +6,6 @@ const User = require('../models/user')
 const router = express.Router()
 const isProduction = process.env === 'production'
 const homePageUrl = isProduction ? '/' : 'http://localhost:3000/'
-const successCallback = (req, res) => {
-  // Successful authentication
-  res.redirect(homePageUrl)
-}
 
 router.get('/user', (req, res) => {
   if (req.user) {
@@ -131,11 +127,20 @@ router.post('/login', (req, res, next) => {
 
 router.get('/auth/github', passportGithub.authenticate('github', { scope: ['user:email'] }))
 
-router.get('/auth/github/callback', passportGithub.authenticate('github', { failureRedirect: `${homePageUrl}login` }), successCallback)
+router.get(
+  '/auth/github/callback',
+  passportGithub.authenticate('github', { failureRedirect: `${homePageUrl}login` }),
+  (req, res) => {
+    // Successful authentication
+    res.redirect(homePageUrl)
+  },
+)
 
 router.get('/logout', (req, res) => {
   req.logout()
-  res.redirect(homePageUrl)
+  res.json({
+    success: true,
+  })
 })
 
 module.exports = router
