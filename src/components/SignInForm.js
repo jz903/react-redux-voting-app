@@ -1,6 +1,6 @@
 import React from 'react'
 import { func } from 'prop-types'
-import { Input, Button, Checkbox, Form } from 'semantic-ui-react'
+import { Input, Button, Form } from 'semantic-ui-react'
 import { Field, reduxForm } from 'redux-form'
 
 import './SignInForm.css'
@@ -28,9 +28,6 @@ const SignIn = ({
         type="password"
         placeholder="Password"
       />
-    </Form.Field>
-    <Form.Field className="remember-field">
-      <Checkbox label="Remember me" />
     </Form.Field>
     <Button primary type="submit">Sign In</Button>
   </Form>

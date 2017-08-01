@@ -7,15 +7,19 @@ const router = express.Router()
 const isProduction = process.env === 'production'
 const homePageUrl = isProduction ? '/' : 'http://localhost:3000/'
 
+const filteredUserProps = user => {
+  const { _doc } = user
+  const { _id, __v, ...rest } = _doc
+
+  return {
+    id: _id,
+    ...rest,
+  }
+}
+
 router.get('/user', (req, res) => {
   if (req.user) {
-    const { _doc } = req.user
-    const { _id, __v, ...rest } = _doc
-
-    res.json({
-      id: _id,
-      ...rest,
-    })
+    res.json(filteredUserProps(req.user))
   } else {
     res.status(401).send({
       error: 'NotSignIn',
@@ -51,7 +55,7 @@ router.post('/register', (req, res, next) => {
           if (sessionError) {
             return next(sessionError)
           }
-          return res.json(user)
+          return res.json(filteredUserProps(user))
         })
       })
     })
@@ -75,53 +79,32 @@ router.post('/register', (req, res, next) => {
 })
 
 router.post('/login', (req, res, next) => {
-  let { username, password, email, displayName } = req.body
+  let { email, password } = req.body
 
-  username = username.trim()
-  password = password.trim()
   email = email.trim()
-  displayName = displayName.trim()
+  password = password.trim()
 
-  const saveUserToDb = () => {
-    const newUser = new User({
-      username,
-      password,
-      email,
-      displayName,
-    })
-
-    newUser.save((err, user) => {
-      if (err) {
-        return res.json({
-          error: err.message,
-        })
-      }
-
-      return passport.authenticate('local')(req, res, () => {
-        req.session.save(sessionError => {
-          if (sessionError) {
-            return next(sessionError)
-          }
-          return res.json(user)
-        })
-      })
-    })
-  }
-
-  User.find({ username }, (err, users) => {
+  User.findOne({ email }, (err, user) => {
     if (err) {
       res.json({
         error: err.message,
       })
     }
 
-    if (users.length) {
+    if (!user) {
       res.status(400).send({
-        error: 'UsernameAlreadyExists',
+        error: 'InvalidCredentials',
       })
-    } else {
-      saveUserToDb()
     }
+
+    return passport.authenticate('local')(req, res, () => {
+      req.session.save(sessionError => {
+        if (sessionError) {
+          return next(sessionError)
+        }
+        return res.json(filteredUserProps(user))
+      })
+    })
   })
 })
 
