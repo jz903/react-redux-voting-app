@@ -1,7 +1,7 @@
 const express = require('express')
-const passport = require('passport')
-const passportGithub = require('../socialAuth/github')
-const User = require('../models/user')
+const passportLocalSignup = require('../auth/local-signup')
+const passportLocalSignin = require('../auth/local-signin')
+const passportGithub = require('../auth/github')
 
 const router = express.Router()
 const isProduction = process.env === 'production'
@@ -28,84 +28,58 @@ router.get('/user', (req, res) => {
 })
 
 router.post('/register', (req, res, next) => {
-  let { username, password, email, displayName } = req.body
-
-  username = username.trim()
-  password = password.trim()
-  email = email.trim()
-  displayName = displayName.trim()
-
-  const saveUserToDb = () => {
-    const newUser = new User({
-      username,
-      password,
-      email,
-      displayName,
-    })
-
-    newUser.save((err, user) => {
-      if (err) {
-        return res.json({
-          error: err.message,
+  return passportLocalSignup.authenticate('local-signup', (err, user) => {
+    if (err) {
+      if (err.name === 'MongoError' && err.code === 11000) {
+        // the 11000 Mongo code is for a duplication email error
+        // the 409 HTTP status code is for conflict error
+        return res.status(409).json({
+          success: false,
+          message: 'Check the form for errors.',
+          errors: {
+            email: 'This email is already taken.',
+          },
         })
       }
 
-      return passport.authenticate('local')(req, res, () => {
-        req.session.save(sessionError => {
-          if (sessionError) {
-            return next(sessionError)
-          }
-          return res.json(filteredUserProps(user))
-        })
+      return res.status(400).json({
+        success: false,
+        message: 'Could not process the form.',
       })
+    }
+
+    req.session.save(sessionError => {
+      if (sessionError) {
+        return next(sessionError)
+      }
+      return res.json(filteredUserProps(user))
     })
-  }
-
-  User.find({ username }, (err, users) => {
-    if (err) {
-      res.json({
-        error: err.message,
-      })
-    }
-
-    if (users.length) {
-      res.status(400).send({
-        error: 'UsernameAlreadyExists',
-      })
-    } else {
-      saveUserToDb()
-    }
-  })
+  })(req, res, next)
 })
 
 router.post('/login', (req, res, next) => {
-  let { email, password } = req.body
-
-  email = email.trim()
-  password = password.trim()
-
-  User.findOne({ email }, (err, user) => {
+  return passportLocalSignin.authenticate('local-signin', (err, user) => {
     if (err) {
-      res.json({
-        error: err.message,
+      if (err.name === 'IncorrectCredentialsError') {
+        return res.status(400).json({
+          success: false,
+          message: err.message,
+        })
+      }
+
+      return res.status(400).json({
+        success: false,
+        message: 'Could not process the form.',
       })
     }
 
-    if (!user) {
-      res.status(400).send({
-        error: 'InvalidCredentials',
-      })
-    }
-
-    return passport.authenticate('local')(req, res, () => {
-      req.session.save(sessionError => {
-        if (sessionError) {
-          return next(sessionError)
-        }
-        return res.json(filteredUserProps(user))
-      })
+    req.session.save(sessionError => {
+      if (sessionError) {
+        return next(sessionError)
+      }
+      return res.json(filteredUserProps(user))
     })
-  })
+  })(req, res, next)
 })
 
 router.get('/auth/github', passportGithub.authenticate('github', { scope: ['user:email'] }))

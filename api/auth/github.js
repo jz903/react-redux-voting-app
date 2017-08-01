@@ -2,7 +2,6 @@ const passport = require('passport')
 const path = require('path')
 const GitHubStrategy = require('passport-github2').Strategy
 const User = require('../models/user')
-const init = require('./init')
 
 require('dotenv').config({ path: path.join(__dirname, '../../.env') })
 
@@ -37,7 +36,15 @@ passport.use(new GitHubStrategy({
 }))
 
 // serialize user into the session
-init()
+passport.serializeUser((user, done) => {
+  done(null, user.id)
+})
+
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => {
+    done(err, user)
+  })
+})
 
 
 module.exports = passport
