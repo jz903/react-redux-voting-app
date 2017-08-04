@@ -2,6 +2,8 @@ import { push } from 'react-router-redux'
 import { normalize, schema } from 'normalizr'
 import { camelizeKeys } from 'humps'
 
+import { showAlert } from '../actions'
+
 const defaultHTTPHeaders = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
@@ -105,6 +107,8 @@ export default store => next => action => {
     error => {
       if (error.error === 'NotSignIn') {
         store.dispatch(push('/login'))
+      } else {
+        store.dispatch(showAlert())
       }
       next(actionWith({
         type: failureType,

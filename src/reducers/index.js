@@ -40,10 +40,23 @@ const errorMessage = (state = null, action) => {
   return state
 }
 
+// Updates alert to notify about the failed fetches.
+const alertShown = (state = false, action) => {
+  switch (action.type) {
+    case ActionTypes.SHOW_ALERT:
+      return true
+    case ActionTypes.HIDE_ALERT:
+      return false
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   user,
   entities,
   errorMessage,
+  alertShown,
   router: routerReducer,
   form: formReducer,
 })

@@ -121,3 +121,16 @@ export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE'
 export const resetErrorMessage = () => ({
   type: RESET_ERROR_MESSAGE,
 })
+
+export const SHOW_ALERT = 'SHOW_ALERT'
+
+export const showAlert = () => ({
+  type: SHOW_ALERT,
+})
+
+
+export const HIDE_ALERT = 'HIDE_ALERT'
+
+export const hideAlert = () => ({
+  type: HIDE_ALERT,
+})
