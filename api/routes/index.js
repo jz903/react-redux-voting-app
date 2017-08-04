@@ -27,8 +27,8 @@ router.get('/user', (req, res) => {
   }
 })
 
-router.post('/register', (req, res, next) => {
-  return passportLocalSignup.authenticate('local-signup', (err, user) => {
+router.post('/register', (req, res, next) =>
+  passportLocalSignup.authenticate('local-signup', (err, user) => {
     if (err) {
       if (err.name === 'MongoError' && err.code === 11000) {
         // the 11000 Mongo code is for a duplication email error
@@ -47,8 +47,8 @@ router.post('/register', (req, res, next) => {
       if (error) return next(error)
       return res.json(filteredUserProps(user))
     })
-  })(req, res, next)
-})
+  })(req, res, next),
+)
 
 router.post('/login', (req, res, next) =>
   passportLocalSignin.authenticate('local-signin', (err, user) => {

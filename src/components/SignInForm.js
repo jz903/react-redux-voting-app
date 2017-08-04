@@ -1,36 +1,24 @@
 import React from 'react'
 import { func } from 'prop-types'
-import { Input, Button, Form } from 'semantic-ui-react'
 import { Field, reduxForm } from 'redux-form'
+import { RaisedButton } from 'material-ui'
 
-import './SignInForm.css'
+import { TextField } from './form'
 
 const SignIn = ({
   handleSubmit,
 }) => (
-  <Form className="ui large form" onSubmit={handleSubmit}>
-    <Form.Field>
-      <Field
-        icon="mail"
-        iconPosition="left"
-        name="email"
-        component={Input}
-        type="email"
-        placeholder="E-mail address"
-      />
-    </Form.Field>
-    <Form.Field>
-      <Field
-        icon="lock"
-        iconPosition="left"
-        name="password"
-        component={Input}
-        type="password"
-        placeholder="Password"
-      />
-    </Form.Field>
-    <Button primary type="submit">Sign In</Button>
-  </Form>
+  <form onSubmit={handleSubmit}>
+    <div className="field">
+      <Field name="email" type="email" component={TextField} label="Email" required />
+    </div>
+    <div className="field">
+      <Field name="password" type="password" component={TextField} label="Password" required />
+    </div>
+    <div className="form-btns">
+      <RaisedButton label="Sign In" type="submit" primary fullWidth />
+    </div>
+  </form>
 )
 
 SignIn.propTypes = {

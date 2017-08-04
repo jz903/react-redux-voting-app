@@ -1,54 +1,30 @@
 import React from 'react'
 import { func } from 'prop-types'
-import { Input, Button, Form } from 'semantic-ui-react'
 import { Field, reduxForm } from 'redux-form'
+import { RaisedButton } from 'material-ui'
+
+import { TextField } from './form'
 
 const SignUp = ({
   handleSubmit,
 }) => (
-  <Form className="ui large form" onSubmit={handleSubmit}>
-    <Form.Field>
-      <Field
-        icon="user"
-        iconPosition="left"
-        name="displayName"
-        component={Input}
-        type="text"
-        placeholder="Your Name"
-      />
-    </Form.Field>
-    <Form.Field>
-      <Field
-        icon="user"
-        iconPosition="left"
-        name="username"
-        component={Input}
-        type="text"
-        placeholder="Pickup a username"
-      />
-    </Form.Field>
-    <Form.Field>
-      <Field
-        icon="mail"
-        iconPosition="left"
-        name="email"
-        component={Input}
-        type="email"
-        placeholder="E-mail address"
-      />
-    </Form.Field>
-    <Form.Field>
-      <Field
-        icon="lock"
-        iconPosition="left"
-        name="password"
-        component={Input}
-        type="password"
-        placeholder="Password"
-      />
-    </Form.Field>
-    <Button primary type="submit">Create An Account</Button>
-  </Form>
+  <form onSubmit={handleSubmit}>
+    <div className="field">
+      <Field name="displayName" component={TextField} label="Your full name" required />
+    </div>
+    <div className="field">
+      <Field name="username" component={TextField} label="Pickup a username" required />
+    </div>
+    <div className="field">
+      <Field name="email" type="email" component={TextField} label="Email" required />
+    </div>
+    <div className="field">
+      <Field name="password" type="password" component={TextField} label="Password" required />
+    </div>
+    <div className="form-btns">
+      <RaisedButton label="Create An Account" type="submit" primary fullWidth />
+    </div>
+  </form>
 )
 
 SignUp.propTypes = {

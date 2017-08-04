@@ -12,6 +12,7 @@
     "express-session": "^1.15.4",
     "history": "^4.6.3",
     "humps": "^2.0.1",
+    "material-ui": "^0.18.7",
     "mongoose": "^4.11.4",
     "normalizr": "^3.2.3",
     "passport": "^0.3.2",
@@ -25,13 +26,12 @@
     "react-router-dom": "^4.1.2",
     "react-router-redux": "^5.0.0-alpha.6",
     "react-scripts": "1.0.10",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.7.2",
     "redux-form": "^7.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1",
-    "semantic-ui-css": "^2.2.11",
-    "semantic-ui-react": "^0.71.1"
+    "reselect": "^3.0.1"
   },
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"npm run api\"",

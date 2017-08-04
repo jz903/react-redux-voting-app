@@ -2,10 +2,13 @@ import React, { PureComponent } from 'react'
 import { func } from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Segment } from 'semantic-ui-react'
+import IconButton from 'material-ui/IconButton'
+
 import * as actions from '../actions'
 import { API_URL } from '../constants'
 import SignUpForm from '../components/SignUpForm'
+
+import './SignPage.css'
 
 class SignUpPage extends PureComponent {
   static propTypes = {
@@ -20,20 +23,24 @@ class SignUpPage extends PureComponent {
 
   render() {
     return (
-      <div className="main-wrapper ui middle aligned center aligned grid">
-        <div className="column">
-          <Segment stacked>
-            <h2 className="ui image header">
-              <img src="/assets/images/logo.svg" className="image" alt="logo" />
-              <div className="content">
-                Sign up your account
-              </div>
-            </h2>
+      <div className="main-wrapper sign-page">
+        <div className="sign-page__box">
+          <div className="sign-page__nav">
+            <Link to="/login">Sign In</Link>
+            <Link to="/join">Sign Up</Link>
+          </div>
+          <div className="sign-page__form">
             <SignUpForm onSubmit={this.handleSubmit} />
-          </Segment>
-          <div className="ui message">
-            Has an account? <Link to="/login">Sign In</Link> <br />
-            <a href={`${API_URL}/auth/github`}>Login with Github account</a>
+            <p>Login with:
+              <a
+                href={`${API_URL}/auth/github`}
+              >
+                <IconButton
+                  iconClassName="fa fa-github"
+                  tooltip="Github"
+                />
+              </a>
+            </p>
           </div>
         </div>
       </div>
