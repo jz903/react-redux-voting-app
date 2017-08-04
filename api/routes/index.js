@@ -34,53 +34,42 @@ router.post('/register', (req, res, next) => {
         // the 11000 Mongo code is for a duplication email error
         // the 409 HTTP status code is for conflict error
         return res.status(409).json({
-          success: false,
-          message: 'Check the form for errors.',
-          errors: {
-            email: 'This email is already taken.',
-          },
+          error: 'EmailAlreadyExists',
         })
       }
 
       return res.status(400).json({
-        success: false,
-        message: 'Could not process the form.',
+        error: 'ServerError',
       })
     }
 
-    req.session.save(sessionError => {
-      if (sessionError) {
-        return next(sessionError)
-      }
+    return req.login(user, error => {
+      if (error) return next(error)
       return res.json(filteredUserProps(user))
     })
   })(req, res, next)
 })
 
-router.post('/login', (req, res, next) => {
-  return passportLocalSignin.authenticate('local-signin', (err, user) => {
+router.post('/login', (req, res, next) =>
+  passportLocalSignin.authenticate('local-signin', (err, user) => {
     if (err) {
       if (err.name === 'IncorrectCredentialsError') {
         return res.status(400).json({
-          success: false,
-          message: err.message,
+          error: err.name,
         })
       }
 
       return res.status(400).json({
-        success: false,
-        message: 'Could not process the form.',
+        error: 'ServerError',
       })
     }
 
-    req.session.save(sessionError => {
-      if (sessionError) {
-        return next(sessionError)
-      }
+    return req.login(user, error => {
+      if (error) return next(error)
       return res.json(filteredUserProps(user))
     })
-  })(req, res, next)
-})
+  })(req, res, next),
+)
 
 router.get('/auth/github', passportGithub.authenticate('github', { scope: ['user:email'] }))
 
