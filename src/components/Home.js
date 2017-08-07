@@ -4,7 +4,11 @@ import './Home.css'
 
 class Home extends PureComponent {
   static propTypes = {
-    user: object, // eslint-disable-line
+    user: object,
+  }
+
+  static defaultProps = {
+    user: {},
   }
 
   render() {

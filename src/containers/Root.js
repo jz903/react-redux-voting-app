@@ -6,8 +6,9 @@ import { ConnectedRouter } from 'react-router-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import { fetchUser } from '../actions/user'
-import Alert from '../containers/Alert'
-import Loading from '../containers/Loading'
+import Header from './Header'
+import Alert from './Alert'
+import Loading from './Loading'
 import Home from './HomePage'
 import SignIn from './SignInPage'
 import SignUp from './SignUpPage'
@@ -33,11 +34,12 @@ class Root extends PureComponent {
           {/* ConnectedRouter will use the store from Provider automatically */}
           <ConnectedRouter history={history}>
             <div>
-              <Alert />
+              <Header />
               <Route exact path="/" component={Home} />
               <Route path="/login" component={SignIn} />
               <Route path="/join" component={SignUp} />
               <Route path="/logout" component={Logout} />
+              <Alert />
               <Loading />
             </div>
           </ConnectedRouter>
