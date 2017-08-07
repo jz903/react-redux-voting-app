@@ -1,0 +1,43 @@
+.loading {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  text-align: center;
+}
+
+.loading::after {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  content: '';
+
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.loading::before {
+  display: inline-block;
+
+  width: 0;
+  height: 100%;
+
+  content: '';
+  vertical-align: middle;
+}
+
+.loading > img {
+  position: relative;
+  z-index: 3;
+
+  width: 60px;
+  height: 60px;
+
+  border-radius: 5px;
+}

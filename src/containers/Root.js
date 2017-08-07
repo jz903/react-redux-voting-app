@@ -7,6 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import { fetchUser } from '../actions/user'
 import Alert from '../containers/Alert'
+import Loading from '../containers/Loading'
 import Home from './HomePage'
 import SignIn from './SignInPage'
 import SignUp from './SignUpPage'
@@ -37,6 +38,7 @@ class Root extends PureComponent {
               <Route path="/login" component={SignIn} />
               <Route path="/join" component={SignUp} />
               <Route path="/logout" component={Logout} />
+              <Loading />
             </div>
           </ConnectedRouter>
         </Provider>

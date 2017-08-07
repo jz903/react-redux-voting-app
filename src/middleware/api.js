@@ -102,12 +102,13 @@ export default store => next => action => {
   }
 
   const [requestType, successType, failureType] = types
-  next(actionWith({ type: requestType }))
+  next(actionWith({ type: requestType, isLoading: true }))
 
   return callApi(callAPI, schema).then(
     response => next(actionWith({
       response,
       type: successType,
+      isLoading: false,
     })),
     error => {
       if (error.error === 'NotSignIn') {
@@ -118,6 +119,7 @@ export default store => next => action => {
       next(actionWith({
         type: failureType,
         error: error.error || 'Something bad happened',
+        isLoading: false,
       }))
     },
   )

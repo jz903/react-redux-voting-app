@@ -47,8 +47,8 @@ Alert.defaultProps = {
 }
 
 const mapStateToProps = state => ({
-  alertShown: state.alertShown,
-  errorMessage: state.errorMessage,
+  alertShown: state.system.alertShown,
+  errorMessage: state.system.errorMessage,
 })
 
 const mapDispatchToProps = dispatch => ({

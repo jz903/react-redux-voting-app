@@ -9,7 +9,7 @@ a {
   padding: 40px 0;
   align-items: center;
   justify-content: center;
-  background-image: url("https://images.unsplash.com/photo-1439694458393-78ecf14da7f9");
+  background-image: url("/assets/images/sign_bg.jpg");
   background-size: cover;
   background-position: 50%;
   position: relative;

@@ -27,36 +27,53 @@ const entities = (state = { users: {} }, action) => {
   return state
 }
 
-// Updates error message to notify about the failed fetches.
-const errorMessage = (state = null, action) => {
-  const { type, error } = action
+const system = (
+  state = {
+    errorMessage: null,
+    alertShown: false,
+    isLoading: false,
+  },
+  action,
+) => {
+  const { type, error, isLoading } = action
+  const newState = {}
 
-  if (type === ActionTypes.RESET_ERROR_MESSAGE) {
-    return null
-  } else if (error) {
-    return error
-  }
-
-  return state
-}
-
-// Updates alert to notify about the failed fetches.
-const alertShown = (state = false, action) => {
-  switch (action.type) {
+  switch (type) {
+    case ActionTypes.RESET_ERROR_MESSAGE:
+      return {
+        ...state,
+        errorMessage: null,
+      }
     case ActionTypes.SHOW_ALERT:
-      return true
+      return {
+        ...state,
+        alertShown: true,
+      }
     case ActionTypes.HIDE_ALERT:
-      return false
+      return {
+        ...state,
+        alertShown: false,
+      }
     default:
-      return state
+      if (error) {
+        newState.errorMessage = error
+      }
+
+      if (isLoading !== undefined) {
+        newState.isLoading = isLoading
+      }
+
+      return {
+        ...state,
+        ...newState,
+      }
   }
 }
 
 const rootReducer = combineReducers({
   user,
   entities,
-  errorMessage,
-  alertShown,
+  system,
   router: routerReducer,
   form: formReducer,
 })
