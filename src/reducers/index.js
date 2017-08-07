@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form'
 
-import * as ActionTypes from '../actions'
+import * as ActionTypes from '../constants/actionTypes'
 
 const user = (state = {}, action) => {
   switch (action.type) {

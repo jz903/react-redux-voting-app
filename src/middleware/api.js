@@ -2,7 +2,7 @@ import { push } from 'react-router-redux'
 import { normalize, schema } from 'normalizr'
 import { camelizeKeys } from 'humps'
 
-import { showAlert } from '../actions'
+import { showAlert } from '../actions/system'
 
 const defaultHTTPHeaders = {
   Accept: 'application/json',

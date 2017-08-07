@@ -5,7 +5,7 @@ import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-import * as actions from '../actions'
+import { fetchUser } from '../actions/user'
 import Alert from '../containers/Alert'
 import Home from './HomePage'
 import SignIn from './SignInPage'
@@ -21,7 +21,7 @@ class Root extends PureComponent {
   componentDidMount() {
     const { store } = this.props
 
-    store.dispatch(actions.fetchUser())
+    store.dispatch(fetchUser())
   }
 
   render() {

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { func } from 'prop-types'
 import { connect } from 'react-redux'
-import * as actions from '../actions'
+import { logout } from '../actions/user'
 
 class LogoutPage extends PureComponent {
   static propTypes = {
@@ -9,9 +9,7 @@ class LogoutPage extends PureComponent {
   }
 
   componentDidMount() {
-    const { logout } = this.props
-
-    logout()
+    this.props.logout()
   }
 
   render() {
@@ -23,7 +21,7 @@ class LogoutPage extends PureComponent {
 
 const mapDispatchToProps = dispatch => ({
   logout: () => {
-    dispatch(actions.logout())
+    dispatch(logout())
   },
 })
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import IconButton from 'material-ui/IconButton'
 
-import * as actions from '../actions'
+import { signUp } from '../actions/user'
 import { API_URL } from '../constants'
 import SignUpForm from '../components/SignUpForm'
 
@@ -16,9 +16,7 @@ class SignUpPage extends PureComponent {
   }
 
   handleSubmit = values => {
-    const { signUp } = this.props
-
-    signUp(values)
+    this.props.signUp(values)
   }
 
   render() {
@@ -50,7 +48,7 @@ class SignUpPage extends PureComponent {
 
 const mapDispatchToProps = dispatch => ({
   signUp: data => {
-    dispatch(actions.signUp(data))
+    dispatch(signUp(data))
   },
 })
 

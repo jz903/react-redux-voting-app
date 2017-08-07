@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 
-import * as actions from '../actions'
+import * as actions from '../actions/system'
 
 const Alert = ({
   alertShown,

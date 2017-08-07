@@ -1,14 +1,10 @@
 import { replace } from 'react-router-redux'
 import { CALL_API, Schemas } from '../middleware/api'
 import { BLACK_LIST_TO_FETCH_USER } from '../constants'
-
-export const FEATCH_USER_REQUEST = 'FEATCH_USER_REQUEST'
-export const FEATCH_USER_SUCCESS = 'FEATCH_USER_SUCCESS'
-export const FEATCH_USER_FAILURE = 'FEATCH_USER_FAILURE'
-export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER'
+import * as actionTypes from '../constants/actionTypes'
 
 export const updateCurrentUserId = id => ({
-  type: UPDATE_CURRENT_USER,
+  type: actionTypes.UPDATE_CURRENT_USER,
   id,
 })
 
@@ -16,7 +12,11 @@ export const updateCurrentUserId = id => ({
 // Relies on the custom API middleware defined in ../middleware/api.js.
 export const fetchUserRequest = () => ({
   [CALL_API]: {
-    types: [FEATCH_USER_REQUEST, FEATCH_USER_SUCCESS, FEATCH_USER_FAILURE],
+    types: [
+      actionTypes.FEATCH_USER_REQUEST,
+      actionTypes.FEATCH_USER_SUCCESS,
+      actionTypes.FEATCH_USER_FAILURE,
+    ],
     endpoint: '/user',
     schema: Schemas.USER,
   },
@@ -37,15 +37,15 @@ export const fetchUser = () => (dispatch, getState) => {
   }
 }
 
-export const SIGNIN_REQUEST = 'SIGNIN_REQUEST'
-export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS'
-export const SIGNIN_FAILURE = 'SIGNIN_FAILURE'
-
 // sign in request
 // Relies on the custom API middleware defined in ../middleware/api.js.
 export const signInRequest = payload => ({
   [CALL_API]: {
-    types: [SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE],
+    types: [
+      actionTypes.SIGNIN_REQUEST,
+      actionTypes.SIGNIN_SUCCESS,
+      actionTypes.SIGNIN_FAILURE,
+    ],
     endpoint: '/login',
     method: 'POST',
     payload,
@@ -65,15 +65,15 @@ export const signIn = payload => dispatch => {
     })
 }
 
-export const SIGNUP_REQUEST = 'SIGNUP_REQUEST'
-export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
-export const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
-
 // sign up request
 // Relies on the custom API middleware defined in ../middleware/api.js.
 export const signUpRequest = payload => ({
   [CALL_API]: {
-    types: [SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE],
+    types: [
+      actionTypes.SIGNUP_REQUEST,
+      actionTypes.SIGNUP_SUCCESS,
+      actionTypes.SIGNUP_FAILURE,
+    ],
     endpoint: '/register',
     method: 'POST',
     payload,
@@ -93,15 +93,11 @@ export const signUp = payload => dispatch => {
     })
 }
 
-export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
-export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
-
 // logout request
 // Relies on the custom API middleware defined in ../middleware/api.js.
 export const logoutRequest = () => ({
   [CALL_API]: {
-    types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE],
+    types: [actionTypes.LOGOUT_REQUEST, actionTypes.LOGOUT_SUCCESS, actionTypes.LOGOUT_FAILURE],
     endpoint: '/logout',
   },
 })
@@ -109,28 +105,8 @@ export const logoutRequest = () => ({
 export const logout = () => dispatch => {
   dispatch(logoutRequest())
     .then(data => {
-      if (data && data.type === LOGOUT_SUCCESS) {
+      if (data && data.type === actionTypes.LOGOUT_SUCCESS) {
         dispatch(replace('/login'))
       }
     })
 }
-
-export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE'
-
-// Resets the currently visible error message.
-export const resetErrorMessage = () => ({
-  type: RESET_ERROR_MESSAGE,
-})
-
-export const SHOW_ALERT = 'SHOW_ALERT'
-
-export const showAlert = () => ({
-  type: SHOW_ALERT,
-})
-
-
-export const HIDE_ALERT = 'HIDE_ALERT'
-
-export const hideAlert = () => ({
-  type: HIDE_ALERT,
-})
