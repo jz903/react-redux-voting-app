@@ -74,7 +74,12 @@ export default store => next => action => {
   }
 
   let { endpoint } = callAPI
-  const { schema, types } = callAPI
+  const { schema, type } = callAPI
+  const types = [
+    type,
+    `${type}_SUCCESS`,
+    `${type}_FAILURE`,
+  ]
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState())
@@ -86,7 +91,7 @@ export default store => next => action => {
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected an array of three action types.')
   }
-  if (!types.every(type => typeof type === 'string')) {
+  if (!types.every(t => typeof t === 'string')) {
     throw new Error('Expected action types to be strings.')
   }
 

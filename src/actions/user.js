@@ -12,11 +12,7 @@ export const updateCurrentUserId = id => ({
 // Relies on the custom API middleware defined in ../middleware/api.js.
 export const fetchUserRequest = () => ({
   [CALL_API]: {
-    types: [
-      actionTypes.FEATCH_USER_REQUEST,
-      actionTypes.FEATCH_USER_SUCCESS,
-      actionTypes.FEATCH_USER_FAILURE,
-    ],
+    type: actionTypes.FEATCH_USER,
     endpoint: '/user',
     schema: Schemas.USER,
   },
@@ -41,11 +37,7 @@ export const fetchUser = () => (dispatch, getState) => {
 // Relies on the custom API middleware defined in ../middleware/api.js.
 export const signInRequest = payload => ({
   [CALL_API]: {
-    types: [
-      actionTypes.SIGNIN_REQUEST,
-      actionTypes.SIGNIN_SUCCESS,
-      actionTypes.SIGNIN_FAILURE,
-    ],
+    type: actionTypes.SIGNIN,
     endpoint: '/login',
     method: 'POST',
     payload,
@@ -69,11 +61,7 @@ export const signIn = payload => dispatch => {
 // Relies on the custom API middleware defined in ../middleware/api.js.
 export const signUpRequest = payload => ({
   [CALL_API]: {
-    types: [
-      actionTypes.SIGNUP_REQUEST,
-      actionTypes.SIGNUP_SUCCESS,
-      actionTypes.SIGNUP_FAILURE,
-    ],
+    type: actionTypes.SIGNUP,
     endpoint: '/register',
     method: 'POST',
     payload,
@@ -97,7 +85,7 @@ export const signUp = payload => dispatch => {
 // Relies on the custom API middleware defined in ../middleware/api.js.
 export const logoutRequest = () => ({
   [CALL_API]: {
-    types: [actionTypes.LOGOUT_REQUEST, actionTypes.LOGOUT_SUCCESS, actionTypes.LOGOUT_FAILURE],
+    type: actionTypes.LOGOUT,
     endpoint: '/logout',
   },
 })
@@ -105,7 +93,7 @@ export const logoutRequest = () => ({
 export const logout = () => dispatch => {
   dispatch(logoutRequest())
     .then(data => {
-      if (data && data.type === actionTypes.LOGOUT_SUCCESS) {
+      if (data && data.type === `${actionTypes.LOGOUT}_SUCCESS`) {
         dispatch(replace('/login'))
       }
     })
