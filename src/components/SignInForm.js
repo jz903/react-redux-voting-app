@@ -1,31 +1,39 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { func } from 'prop-types'
-import { Field, reduxForm } from 'redux-form'
-import { RaisedButton } from 'material-ui'
+import { Form, Icon, Input, Button } from 'antd'
 
-import { TextField } from './form'
+class SignIn extends Component {
+  static propTypes = {
+    signIn: func.isRequired,
+  }
 
-const SignIn = ({
-  handleSubmit,
-}) => (
-  <form onSubmit={handleSubmit}>
-    <div className="field">
-      <Field name="email" type="email" component={TextField} label="Email" required />
-    </div>
-    <div className="field">
-      <Field name="password" type="password" component={TextField} label="Password" required />
-    </div>
-    <div className="form-btns">
-      <RaisedButton label="Sign In" type="submit" primary fullWidth />
-    </div>
-  </form>
-)
+  handleSubmit = e => {
+    e.preventDefault()
 
-SignIn.propTypes = {
-  handleSubmit: func.isRequired,
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values)
+      }
+
+      this.props.signIn(values)
+    })
+  }
+
+  render() {
+    return (
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Item>
+          <Input prefix={<Icon type="mail" />} name="email" type="email" placeholder="Email" />
+        </Form.Item>
+        <Form.Item>
+          <Input prefix={<Icon type="lock" />} name="password" type="password" placeholder="Password" />
+        </Form.Item>
+        <Button type="primary" htmlType="submit">
+          Log in
+        </Button>
+      </Form>
+    )
+  }
 }
 
-export default reduxForm({
-  // a unique name for the form
-  form: 'signin',
-})(SignIn)
+export default Form.create()(SignIn)

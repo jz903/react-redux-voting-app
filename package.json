@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:3001/",
   "dependencies": {
+    "antd": "^2.12.5",
     "body-parser": "^1.17.2",
     "classnames": "^2.2.5",
     "cookie-parser": "^1.4.3",
@@ -13,7 +14,6 @@
     "express-session": "^1.15.4",
     "history": "^4.6.3",
     "humps": "^2.0.1",
-    "material-ui": "^0.18.7",
     "mongoose": "^4.11.4",
     "normalizr": "^3.2.3",
     "passport": "^0.3.2",
@@ -27,9 +27,7 @@
     "react-router-dom": "^4.1.2",
     "react-router-redux": "^5.0.0-alpha.6",
     "react-scripts": "1.0.10",
-    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.7.2",
-    "redux-form": "^7.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { func } from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import IconButton from 'material-ui/IconButton'
+import { Tooltip, Icon } from 'antd'
 
 import { signUp } from '../actions/user'
 import { API_URL } from '../constants'
@@ -29,16 +29,13 @@ class SignUpPage extends PureComponent {
           </div>
           <div className="sign-page__form">
             <SignUpForm onSubmit={this.handleSubmit} />
-            <p>Login with:
-              <a
-                href={`${API_URL}/auth/github`}
-              >
-                <IconButton
-                  iconClassName="fa fa-github"
-                  tooltip="Github"
-                />
-              </a>
-            </p>
+            <div>Login with:
+              <Tooltip title="Github account">
+                <a href={`${API_URL}/auth/github`} >
+                  <Icon type="github" />
+                </a>
+              </Tooltip>
+            </div>
           </div>
         </div>
       </div>

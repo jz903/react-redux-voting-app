@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
-import { reducer as formReducer } from 'redux-form'
 
 import * as ActionTypes from '../constants/actionTypes'
 
@@ -75,7 +74,6 @@ const rootReducer = combineReducers({
   entities,
   system,
   router: routerReducer,
-  form: formReducer,
 })
 
 export default rootReducer
