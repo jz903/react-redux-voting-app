@@ -11,3 +11,14 @@ export const getCurrentUser = createSelector(
     ...users[currUser.id],
   }),
 )
+
+const currVotingId = (state, ownProps) => ownProps.match.params.id
+const votingsSelector = state => state.entities.votings
+
+export const getCurrentVoting = createSelector(
+  currVotingId,
+  votingsSelector,
+  (id, votings) => ({
+    ...votings[id],
+  }),
+)

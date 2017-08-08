@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { object } from 'prop-types'
+import { object, func } from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Form, Icon, Input, Button, Checkbox } from 'antd'
 
@@ -9,7 +9,15 @@ let uuid = 0
 
 class Voting extends PureComponent {
   static propTypes = {
+    voting: object.isRequired,
     form: object.isRequired,
+    addVoting: func,
+    updateVoting: func,
+  }
+
+  static defaultProps = {
+    addVoting: () => {},
+    updateVoting: () => {},
   }
 
   remove = id => {
@@ -36,15 +44,22 @@ class Voting extends PureComponent {
   handleSubmit = e => {
     e.preventDefault()
 
-    this.props.form.validateFields((err, values) => {
+    const { voting, form, addVoting, updateVoting } = this.props
+
+    form.validateFields((err, values) => {
       if (!err) {
         const { options, title, multiple } = values
-
-        console.log('Received values of form: ', {
+        const filteredValues = {
           title,
           multiple,
           options: options.map(id => values[`options-${id}`]),
-        })
+        }
+
+        if (Object.keys(voting).length > 0) {
+          updateVoting(voting.id, filteredValues)
+        } else {
+          addVoting(filteredValues)
+        }
       }
     })
   }

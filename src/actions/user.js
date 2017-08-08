@@ -1,5 +1,6 @@
 import { replace } from 'react-router-redux'
-import { CALL_API, Schemas } from '../middleware/api'
+import { CALL_API } from '../middleware/api'
+import { Schemas } from '../constants/entities'
 import { BLACK_LIST_TO_FETCH_USER } from '../constants'
 import * as actionTypes from '../constants/actionTypes'
 

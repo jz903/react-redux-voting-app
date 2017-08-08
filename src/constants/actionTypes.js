@@ -11,3 +11,9 @@ export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER'
 export const SIGNIN = 'SIGNIN'
 export const SIGNUP = 'SIGNUP'
 export const LOGOUT = 'LOGOUT'
+
+// voting
+export const ADD_VOTING = 'ADD_VOTING'
+export const UPDATE_VOTING = 'UPDATE_VOTING'
+export const FEATCH_VOTINGS = 'FEATCH_VOTINGS'
+export const DELETE_VOTING = 'DELETE_VOTING'
