@@ -1,0 +1,24 @@
+.header-title {
+  color: #fff;
+}
+
+.header-title a {
+  color: #fff;
+}
+
+.trigger {
+  font-size: 1.5rem;
+  line-height: 64px;
+  padding: 0 16px;
+  cursor: pointer;
+  transition: color .3s;
+}
+
+.trigger:hover {
+  color: #108ee9;
+}
+
+.header-nav.ant-menu {
+  line-height: 4rem;
+  float: right;
+}
