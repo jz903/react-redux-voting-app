@@ -6,7 +6,7 @@ import { ConnectedRouter } from 'react-router-redux'
 
 import { fetchUser } from '../actions/user'
 import Header from './Header'
-import Alert from './Alert'
+import TopAlert from './TopAlert'
 import Loading from './Loading'
 import Home from './HomePage'
 import SignIn from './SignInPage'
@@ -37,7 +37,7 @@ class Root extends PureComponent {
             <Route path="/login" component={SignIn} />
             <Route path="/join" component={SignUp} />
             <Route path="/logout" component={Logout} />
-            <Alert />
+            <TopAlert />
             <Loading />
           </div>
         </ConnectedRouter>

@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
-import { func } from 'prop-types'
+import React, { PureComponent } from 'react'
+import { object, func } from 'prop-types'
 import { Form, Icon, Input, Button } from 'antd'
 
-class SignIn extends Component {
+class SignIn extends PureComponent {
   static propTypes = {
+    form: object.isRequired,
     signIn: func.isRequired,
   }
 
@@ -12,24 +13,32 @@ class SignIn extends Component {
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
+        this.props.signIn(values)
       }
-
-      this.props.signIn(values)
     })
   }
 
   render() {
+    const { getFieldDecorator } = this.props.form
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Item>
-          <Input prefix={<Icon type="mail" />} name="email" type="email" placeholder="Email" />
+          {getFieldDecorator('email', {
+            rules: [{ required: true }],
+          })(
+            <Input prefix={<Icon type="mail" />} type="email" placeholder="Email" />,
+          )}
         </Form.Item>
         <Form.Item>
-          <Input prefix={<Icon type="lock" />} name="password" type="password" placeholder="Password" />
+          {getFieldDecorator('password', {
+            rules: [{ required: true }],
+          })(
+            <Input prefix={<Icon type="lock" />} type="password" placeholder="Password" />,
+          )}
         </Form.Item>
-        <Button type="primary" htmlType="submit">
-          Log in
+        <Button type="primary" htmlType="submit" className="form-btn">
+          Sign In
         </Button>
       </Form>
     )

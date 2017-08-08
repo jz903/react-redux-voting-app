@@ -1,12 +1,8 @@
 import * as actionTypes from '../constants/actionTypes'
 
-// Resets the currently visible error message.
-export const resetErrorMessage = () => ({
-  type: actionTypes.RESET_ERROR_MESSAGE,
-})
-
-export const showAlert = () => ({
+export const showAlert = alert => ({
   type: actionTypes.SHOW_ALERT,
+  alert,
 })
 
 export const hideAlert = () => ({

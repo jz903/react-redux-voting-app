@@ -114,7 +114,10 @@ export default store => next => action => {
       if (error.error === 'NotSignIn') {
         store.dispatch(push('/login'))
       } else {
-        store.dispatch(showAlert())
+        store.dispatch(showAlert({
+          type: 'error',
+          messeage: error.error,
+        }))
       }
       next(actionWith({
         type: failureType,

@@ -27,10 +27,14 @@ a {
 
 .sign-page__box {
   position: relative;
-  max-width: 480px;
-  padding: 30px 50px;
+  width: 380px;
+  padding: 30px;
   background-color: #fff;
   border-radius: .5rem;
+}
+
+.sign-page__nav {
+  margin-bottom: 1em;
 }
 
 .sign-page__nav a {
@@ -43,9 +47,21 @@ a {
 
 .sign-page__nav a:hover,
 .sign-page__nav a:focus {
-  border-bottom-color: #00BCD4;
+  border-bottom-color: #108ee9;
+  text-decoration: none;
 }
 
-.form-btns {
-  margin: 2rem 0 1rem;
+.form-btn {
+  width: 100%;
+}
+
+.other-login {
+  margin-top: 1em;
+  font-size: 1.2em;
+}
+
+.other-login > a {
+  margin-left: .5em;
+  font-size: 1.5em;
+  color: #000;
 }

@@ -28,8 +28,7 @@ const entities = (state = { users: {} }, action) => {
 
 const system = (
   state = {
-    errorMessage: null,
-    alertShown: false,
+    alert: false,
     isLoading: false,
   },
   action,
@@ -38,24 +37,24 @@ const system = (
   const newState = {}
 
   switch (type) {
-    case ActionTypes.RESET_ERROR_MESSAGE:
-      return {
-        ...state,
-        errorMessage: null,
-      }
     case ActionTypes.SHOW_ALERT:
       return {
         ...state,
-        alertShown: true,
+        alert: {
+          ...action.alert,
+        },
       }
     case ActionTypes.HIDE_ALERT:
       return {
         ...state,
-        alertShown: false,
+        alert: false,
       }
     default:
       if (error) {
-        newState.errorMessage = error
+        newState.alert = {
+          type: 'error',
+          message: error,
+        }
       }
 
       if (isLoading !== undefined) {

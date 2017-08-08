@@ -1,6 +1,7 @@
 import React from 'react'
 import { bool } from 'prop-types'
 import { connect } from 'react-redux'
+import { Spin } from 'antd'
 
 import './Loading.css'
 
@@ -8,7 +9,7 @@ const Loading = ({
   isLoading,
 }) => isLoading && (
   <div className="loading">
-    <img alt="" src="/assets/images/loading.gif" />
+    <Spin tip="Loading..." />
   </div>
 )
 

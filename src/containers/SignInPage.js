@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import { func } from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -18,13 +18,13 @@ const SignInPage = props => (
       </div>
       <div className="sign-page__form">
         <SignInForm signIn={props.signIn} />
-        <div>Login with:
+        <p className="other-login">Login with:
           <Tooltip title="Github account">
             <a href={`${API_URL}/auth/github`} >
               <Icon type="github" />
             </a>
           </Tooltip>
-        </div>
+        </p>
       </div>
     </div>
   </div>
