@@ -5,14 +5,17 @@ a {
 
 .sign-page {
   display: flex;
-  height: 100%;
   padding: 40px 0;
   align-items: center;
   justify-content: center;
   background-image: url("/assets/images/sign_bg.jpg");
   background-size: cover;
   background-position: 50%;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .sign-page:before {

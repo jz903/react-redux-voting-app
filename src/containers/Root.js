@@ -3,6 +3,7 @@ import { object } from 'prop-types'
 import { Provider } from 'react-redux'
 import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
+import { Layout, Menu, Breadcrumb } from 'antd'
 
 import { fetchUser } from '../actions/user'
 import { hideAlert } from '../actions/system'
@@ -13,6 +14,9 @@ import Home from './HomePage'
 import SignIn from './SignInPage'
 import SignUp from './SignUpPage'
 import Logout from './LogoutPage'
+import Voting from './VotingPage'
+
+const { Content, Footer } = Layout
 
 class Root extends PureComponent {
   static propTypes = {
@@ -39,15 +43,21 @@ class Root extends PureComponent {
       <Provider store={store}>
         {/* ConnectedRouter will use the store from Provider automatically */}
         <ConnectedRouter history={history}>
-          <div>
+          <Layout className="layout">
             <Header />
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={SignIn} />
-            <Route path="/join" component={SignUp} />
-            <Route path="/logout" component={Logout} />
-            <TopAlert />
+            <Content>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/voting/:id" component={Voting} />
+              <Route path="/login" component={SignIn} />
+              <Route path="/join" component={SignUp} />
+              <Route path="/logout" component={Logout} />
+              <TopAlert />
+            </Content>
+            <Footer>
+              FCC VOTING APP ©2017 Chris Zhou
+            </Footer>
             <Loading />
-          </div>
+          </Layout>
         </ConnectedRouter>
       </Provider>
     )
