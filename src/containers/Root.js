@@ -3,7 +3,7 @@ import { object } from 'prop-types'
 import { Provider } from 'react-redux'
 import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
-import { Layout, Menu, Breadcrumb } from 'antd'
+import { Layout } from 'antd'
 
 import { fetchUser } from '../actions/user'
 import { hideAlert } from '../actions/system'
