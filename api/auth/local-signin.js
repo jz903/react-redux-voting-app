@@ -1,6 +1,8 @@
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
-const Account = require('../models/account')
+import passport from 'passport'
+import Strategy from 'passport-local'
+import Account from '../models/account'
+
+const LocalStrategy = Strategy.Strategy
 
 passport.use('local-signin', new LocalStrategy({
   usernameField: 'email',
@@ -46,4 +48,4 @@ passport.deserializeUser((id, done) => {
 })
 
 
-module.exports = passport
+export default passport

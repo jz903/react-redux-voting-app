@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 const Vote = new Schema({
@@ -7,4 +7,4 @@ const Vote = new Schema({
   date: { type: Date, default: Date.now },
 })
 
-module.exports = mongoose.model('votes', Vote)
+export default mongoose.model('votes', Vote)

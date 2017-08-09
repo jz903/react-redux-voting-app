@@ -1,12 +1,13 @@
-const express = require('express')
-const cors = require('cors')
-const path = require('path')
-const passport = require('passport')
-const cookieParser = require('cookie-parser')
-const bodyParser = require('body-parser')
-const session = require('express-session')
-const mongoose = require('mongoose')
-const routes = require('./routes')
+import express from 'express'
+import cors from 'cors'
+import path from 'path'
+import passport from 'passport'
+import cookieParser from 'cookie-parser'
+import bodyParser from 'body-parser'
+import session from 'express-session'
+import mongoose from 'mongoose'
+
+import routes from './routes'
 
 const app = express()
 const dbUrl = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/fcc-voting'

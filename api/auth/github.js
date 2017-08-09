@@ -1,9 +1,13 @@
-const passport = require('passport')
-const path = require('path')
-const GitHubStrategy = require('passport-github2').Strategy
-const User = require('../models/user')
+import passport from 'passport'
+import path from 'path'
+import Strategy from 'passport-github2'
+import dotenv from 'dotenv'
 
-require('dotenv').config({ path: path.join(__dirname, '../../.env') })
+import User from '../models/user'
+
+const GitHubStrategy = Strategy.Strategy
+
+dotenv.config({ path: path.join(__dirname, '../../.env') })
 
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
@@ -47,4 +51,4 @@ passport.deserializeUser((id, done) => {
 })
 
 
-module.exports = passport
+export default passport

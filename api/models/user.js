@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
@@ -9,4 +9,4 @@ const User = new Schema({
   githubId: String,
 })
 
-module.exports = mongoose.model('users', User)
+export default mongoose.model('users', User)

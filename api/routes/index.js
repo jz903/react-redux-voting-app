@@ -1,7 +1,7 @@
-const express = require('express')
-const passportLocalSignup = require('../auth/local-signup')
-const passportLocalSignin = require('../auth/local-signin')
-const passportGithub = require('../auth/github')
+import express from 'express'
+import passportLocalSignup from '../auth/local-signup'
+import passportLocalSignin from '../auth/local-signin'
+import passportGithub from '../auth/github'
 
 const router = express.Router()
 const isProduction = process.env === 'production'
@@ -89,4 +89,4 @@ router.get('/logout', (req, res) => {
   })
 })
 
-module.exports = router
+export default router

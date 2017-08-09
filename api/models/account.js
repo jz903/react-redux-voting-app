@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 const Account = new Schema({
@@ -9,4 +9,4 @@ const Account = new Schema({
   githubId: String,
 })
 
-module.exports = mongoose.model('accounts', Account)
+export default mongoose.model('accounts', Account)
