@@ -15,17 +15,32 @@ exports[`Home component should render right thing and don't change unexpected 1`
     <h2>
       Welcome 
       
-       to React
+       to FCC VOTING APP
     </h2>
   </div>
   <p
     className="App-intro"
   >
-    To get started, edit 
-    <code>
-      src/App.js
-    </code>
-     and save to reload.
+    There is no votings yet.
+    <br />
+    <a
+      href="/voting/new"
+      onClick={[Function]}
+    >
+      <button
+        className="ant-btn add-voting ant-btn-primary"
+        onClick={[Function]}
+        onMouseUp={[Function]}
+        type="button"
+      >
+        <i
+          className="anticon anticon-file-add"
+        />
+        <span>
+          Add a new voting
+        </span>
+      </button>
+    </a>
   </p>
 </div>
 `;
