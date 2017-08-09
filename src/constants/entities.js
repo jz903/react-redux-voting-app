@@ -17,14 +17,14 @@ export const userSchema = new schema.Entity('users', {}, {
   idAttribute: user => user.id,
 })
 
-export const votingSchema = new schema.Entity('votings', {}, {
-  idAttribute: voting => voting.id,
+export const voteSchema = new schema.Entity('votes', {}, {
+  idAttribute: vote => vote.id,
 })
 
 // Schemas for API responses.
 export const Schemas = {
   USER: userSchema,
   USER_ARRAY: [userSchema],
-  VOTING: votingSchema,
-  VOTING_ARRAY: [votingSchema],
+  VOTE: voteSchema,
+  VOTE_ARRAY: [voteSchema],
 }

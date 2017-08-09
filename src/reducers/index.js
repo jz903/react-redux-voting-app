@@ -15,7 +15,7 @@ const user = (state = {}, action) => {
 }
 
 // Updates an entity cache in response to any action with response.entities.
-const entities = (state = { users: {}, votings: {} }, action) => {
+const entities = (state = { users: {}, votes: {} }, action) => {
   if (action.response && action.response.entities) {
     return {
       ...state,

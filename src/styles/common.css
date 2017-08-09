@@ -22,6 +22,10 @@ body {
   background-color: #fff;
 }
 
+.ant-layout-content {
+  position: relative;
+}
+
 .ant-layout-content > .container {
   margin-top: 30px;
 }

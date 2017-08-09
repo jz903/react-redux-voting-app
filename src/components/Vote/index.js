@@ -7,17 +7,17 @@ import './index.css'
 
 let uuid = 0
 
-class Voting extends PureComponent {
+class Vote extends PureComponent {
   static propTypes = {
-    voting: object.isRequired,
+    vote: object.isRequired,
     form: object.isRequired,
-    addVoting: func,
-    updateVoting: func,
+    addVote: func,
+    updateVote: func,
   }
 
   static defaultProps = {
-    addVoting: () => {},
-    updateVoting: () => {},
+    addVote: () => {},
+    updateVote: () => {},
   }
 
   remove = id => {
@@ -44,7 +44,7 @@ class Voting extends PureComponent {
   handleSubmit = e => {
     e.preventDefault()
 
-    const { voting, form, addVoting, updateVoting } = this.props
+    const { vote, form, addVote, updateVote } = this.props
 
     form.validateFields((err, values) => {
       if (!err) {
@@ -55,10 +55,10 @@ class Voting extends PureComponent {
           options: options.map(id => values[`options-${id}`]),
         }
 
-        if (Object.keys(voting).length > 0) {
-          updateVoting(voting.id, filteredValues)
+        if (Object.keys(vote).length > 0) {
+          updateVote(vote.id, filteredValues)
         } else {
-          addVoting(filteredValues)
+          addVote(filteredValues)
         }
       }
     })
@@ -93,7 +93,7 @@ class Voting extends PureComponent {
     getFieldDecorator('options', { initialValue: [] })
 
     const options = getFieldValue('options')
-    const votingOptions = options.map((id, index) => (
+    const voteOptions = options.map((id, index) => (
       <Form.Item
         {...(index === 0 ? formItemLayout : tailFormItemLayout)}
         label={index === 0 ? 'Options' : ''}
@@ -122,8 +122,8 @@ class Voting extends PureComponent {
     ))
 
     return (
-      <div className="voting container">
-        <h2>Create a new voting</h2>
+      <div className="vote container">
+        <h2>Create a new vote</h2>
         <Form onSubmit={this.handleSubmit} className="login-form">
           <Form.Item
             {...formItemLayout}
@@ -135,7 +135,7 @@ class Voting extends PureComponent {
               <Input />,
             )}
           </Form.Item>
-          {votingOptions}
+          {voteOptions}
           <Form.Item {...tailFormItemLayout}>
             <Button type="dashed" onClick={this.add} style={{ width: '60%' }}>
               <Icon type="plus" /> Add Option
@@ -162,4 +162,4 @@ class Voting extends PureComponent {
   }
 }
 
-export default Form.create()(Voting)
+export default Form.create()(Vote)

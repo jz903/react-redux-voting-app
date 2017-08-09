@@ -14,7 +14,7 @@ import Home from './HomePage'
 import SignIn from './SignInPage'
 import SignUp from './SignUpPage'
 import Logout from './LogoutPage'
-import Voting from './VotingPage'
+import Vote from './VotePage'
 
 const { Content, Footer } = Layout
 
@@ -47,7 +47,7 @@ class Root extends PureComponent {
             <Header />
             <Content>
               <Route exact path="/" component={Home} />
-              <Route exact path="/voting/:id" component={Voting} />
+              <Route exact path="/vote/:id" component={Vote} />
               <Route path="/login" component={SignIn} />
               <Route path="/join" component={SignUp} />
               <Route path="/logout" component={Logout} />

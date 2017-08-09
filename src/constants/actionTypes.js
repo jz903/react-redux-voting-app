@@ -12,8 +12,8 @@ export const SIGNIN = 'SIGNIN'
 export const SIGNUP = 'SIGNUP'
 export const LOGOUT = 'LOGOUT'
 
-// voting
-export const ADD_VOTING = 'ADD_VOTING'
-export const UPDATE_VOTING = 'UPDATE_VOTING'
-export const FEATCH_VOTINGS = 'FEATCH_VOTINGS'
-export const DELETE_VOTING = 'DELETE_VOTING'
+// vote
+export const ADD_VOTE = 'ADD_VOTE'
+export const UPDATE_VOTE = 'UPDATE_VOTE'
+export const FEATCH_VOTES = 'FEATCH_VOTES'
+export const DELETE_VOTE = 'DELETE_VOTE'

@@ -26,10 +26,10 @@ class Home extends PureComponent {
           </h2>
         </div>
         <p className="App-intro">
-          There is no votings yet.<br />
-          <Link to="/voting/new">
-            <Button type="primary" icon="file-add" className="add-voting">
-              Add a new voting
+          There is no votes yet.<br />
+          <Link to="/vote/new">
+            <Button type="primary" icon="file-add" className="add-vote">
+              Add a new vote
             </Button>
           </Link>
         </p>
