@@ -1,3 +1,4 @@
+import { push } from 'react-router-redux'
 import { CALL_API } from '../middleware/api'
 import { Schemas } from '../constants/entities'
 import * as actionTypes from '../constants/actionTypes'
@@ -20,7 +21,7 @@ export const fetchVoteDetail = (id, payload) => ({
   },
 })
 
-export const addVote = payload => ({
+export const addVoteRequest = payload => ({
   [CALL_API]: {
     type: actionTypes.ADD_VOTE,
     endpoint: '/vote/new',
@@ -30,7 +31,12 @@ export const addVote = payload => ({
   },
 })
 
-export const updateVote = (id, payload) => ({
+export const addVote = payload => dispatch => {
+  dispatch(addVoteRequest(payload))
+    .then(() => dispatch(push('/')))
+}
+
+export const updateVoteRequest = (id, payload) => ({
   [CALL_API]: {
     type: actionTypes.UPDATE_VOTE,
     endpoint: `/vote/${id}`,
@@ -39,3 +45,8 @@ export const updateVote = (id, payload) => ({
     schema: Schemas.VOTE,
   },
 })
+
+export const updateVote = payload => dispatch => {
+  dispatch(updateVoteRequest(payload))
+    .then(() => dispatch(push('/')))
+}

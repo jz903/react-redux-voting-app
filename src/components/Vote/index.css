@@ -1,4 +1,5 @@
-.vote {
+.vote.container {
+  margin-top: 30px;
   background-color: #fff;
 }
 
