@@ -13,7 +13,7 @@ export const updateCurrentUserId = id => ({
 // Relies on the custom API middleware defined in ../middleware/api.js.
 export const fetchUserRequest = () => ({
   [CALL_API]: {
-    type: actionTypes.FEATCH_USER,
+    type: actionTypes.FETCH_USER,
     endpoint: '/user',
     schema: Schemas.USER,
   },

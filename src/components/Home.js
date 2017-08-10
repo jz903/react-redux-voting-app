@@ -1,24 +1,32 @@
 import React, { PureComponent } from 'react'
-import { object } from 'prop-types'
+import { object, func } from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Button } from 'antd'
+import { Row, Col, Button } from 'antd'
+
+import VoteCard from './Vote/VoteCard'
 
 import './Home.css'
 
 class Home extends PureComponent {
   static propTypes = {
-    user: object,
+    user: object.isRequired,
+    votes: object.isRequired,
+    fetchAllVotes: func.isRequired,
   }
 
-  static defaultProps = {
-    user: {},
+  componentDidMount() {
+    const { fetchAllVotes } = this.props
+
+    fetchAllVotes()
   }
 
   render() {
-    const { user } = this.props
+    const { user, votes } = this.props
     const name = (user && user.displayName) || ''
+    const isEmpty = Object.keys(votes).length === 0
+
     return (
-      <div className="App">
+      <div className="App container">
         <div className="App-header">
           <img src="/assets/images/logo.svg" className="App-logo" alt="logo" />
           <h2>
@@ -26,13 +34,22 @@ class Home extends PureComponent {
           </h2>
         </div>
         <p className="App-intro">
-          There is no votes yet.<br />
+          {isEmpty && <span>There is no votes yet.<br /></span>}
           <Link to="/vote/new">
             <Button type="primary" icon="file-add" className="add-vote">
               Add a new vote
             </Button>
           </Link>
         </p>
+        <div className="App-votes">
+          <Row gutter={16}>
+            {Object.keys(votes).map(key => (
+              <Col span={8} key={key}>
+                <VoteCard vote={votes[key]}>Card content</VoteCard>
+              </Col>
+            ))}
+          </Row>
+        </div>
       </div>
     )
   }
