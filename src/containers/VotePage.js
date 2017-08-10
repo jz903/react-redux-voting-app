@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import Vote from '../components/Vote'
-import { addVote, updateVote } from '../actions/vote'
+import VoteDetail from '../components/Vote/VoteDetail'
+import { addVote, updateVote, fetchVoteDetail } from '../actions/vote'
 import { getCurrentVote } from '../selectors'
 
 const mapStateToProps = (state, ownProps) => ({
@@ -14,6 +14,9 @@ const mapDispatchToProps = dispatch => ({
   updateVote: (id, data) => {
     dispatch(updateVote(id, data))
   },
+  fetchVoteDetail: id => {
+    dispatch(fetchVoteDetail(id))
+  },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Vote)
+export default connect(mapStateToProps, mapDispatchToProps)(VoteDetail)

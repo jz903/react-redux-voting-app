@@ -47,7 +47,7 @@ class Root extends PureComponent {
             <Header />
             <Content>
               <Route exact path="/" component={Home} />
-              <Route exact path="/vote/:id" component={Vote} />
+              <Route path="/vote/:id" component={Vote} />
               <Route path="/login" component={SignIn} />
               <Route path="/join" component={SignUp} />
               <Route path="/logout" component={Logout} />

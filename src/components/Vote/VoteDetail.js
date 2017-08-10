@@ -3,21 +3,27 @@ import { object, func } from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Form, Icon, Input, Button, Checkbox } from 'antd'
 
-import './index.css'
+import './VoteDetail.css'
 
 let uuid = 0
 
 class Vote extends PureComponent {
   static propTypes = {
+    match: object.isRequired,
     vote: object.isRequired,
     form: object.isRequired,
-    addVote: func,
-    updateVote: func,
+    addVote: func.isRequired,
+    updateVote: func.isRequired,
+    fetchVoteDetail: func.isRequired,
   }
 
-  static defaultProps = {
-    addVote: () => {},
-    updateVote: () => {},
+  componentDidMount() {
+    const { match, fetchVoteDetail } = this.props
+    const { id } = match.params
+
+    if (id !== 'new') {
+      fetchVoteDetail(match.params.id)
+    }
   }
 
   remove = id => {
@@ -55,7 +61,7 @@ class Vote extends PureComponent {
           options: options.map(id => values[`options-${id}`]),
         }
 
-        if (Object.keys(vote).length > 0) {
+        if (vote.id) {
           updateVote(vote.id, filteredValues)
         } else {
           addVote(filteredValues)
@@ -90,17 +96,14 @@ class Vote extends PureComponent {
       },
     }
 
-    getFieldDecorator('options', { initialValue: [] })
-
     const options = getFieldValue('options')
-    const voteOptions = options.map((id, index) => (
+    const voteOptions = options.map((option, index) => (
       <Form.Item
         {...(index === 0 ? formItemLayout : tailFormItemLayout)}
         label={index === 0 ? 'Options' : ''}
-        required={false}
-        key={id}
+        key={option.id}
       >
-        {getFieldDecorator(`options-${id}`, {
+        {getFieldDecorator(`options-${option.id}`, {
           validateTrigger: ['onChange', 'onBlur'],
           rules: [{
             required: true,
@@ -115,7 +118,7 @@ class Vote extends PureComponent {
             className="dynamic-delete-button"
             type="minus-circle-o"
             disabled={options.length === 1}
-            onClick={() => this.remove(id)}
+            onClick={() => this.remove(option.id)}
           />
         ) : null}
       </Form.Item>
@@ -162,4 +165,32 @@ class Vote extends PureComponent {
   }
 }
 
-export default Form.create()(Vote)
+const mapPropsToFields = ({ vote }) => {
+  const { title, options, multiple } = vote
+  const optionsFields = {}
+
+  if (options && options.length) {
+    options.forEach(option => {
+      optionsFields[`options-${option.id}`] = {
+        value: option.text || '',
+      }
+    })
+  }
+
+  return {
+    title: {
+      value: title || '',
+    },
+    options: {
+      value: options || [],
+    },
+    multiple: {
+      value: multiple || false,
+    },
+    ...optionsFields,
+  }
+}
+
+export default Form.create({
+  mapPropsToFields,
+})(Vote)

@@ -3,20 +3,18 @@ import { CALL_API } from '../middleware/api'
 import { Schemas } from '../constants/entities'
 import * as actionTypes from '../constants/actionTypes'
 
-export const fetchAllVotes = (id, payload) => ({
+export const fetchAllVotes = () => ({
   [CALL_API]: {
     type: actionTypes.FETCH_ALL_VOTES,
     endpoint: '/vote',
-    payload,
     schema: Schemas.VOTE_ARRAY,
   },
 })
 
-export const fetchVoteDetail = (id, payload) => ({
+export const fetchVoteDetail = id => ({
   [CALL_API]: {
     type: actionTypes.FETCH_VOTE_DETAIL,
     endpoint: `/vote/${id}`,
-    payload,
     schema: Schemas.VOTE,
   },
 })
