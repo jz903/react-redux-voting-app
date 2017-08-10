@@ -2,7 +2,7 @@
 
 exports[`Home component should render right thing and don't change unexpected 1`] = `
 <div
-  className="App"
+  className="App container"
 >
   <div
     className="App-header"
@@ -21,8 +21,10 @@ exports[`Home component should render right thing and don't change unexpected 1`
   <p
     className="App-intro"
   >
-    There is no votes yet.
-    <br />
+    <span>
+      There is no votes yet.
+      <br />
+    </span>
     <a
       href="/vote/new"
       onClick={[Function]}
@@ -42,5 +44,18 @@ exports[`Home component should render right thing and don't change unexpected 1`
       </button>
     </a>
   </p>
+  <div
+    className="App-votes"
+  >
+    <div
+      className="ant-row"
+      style={
+        Object {
+          "marginLeft": -8,
+          "marginRight": -8,
+        }
+      }
+    />
+  </div>
 </div>
 `;

@@ -5,11 +5,16 @@ import { MemoryRouter } from 'react-router-dom'
 
 import Home from '../../components/Home'
 
-const setup = (user = {}) => {
-  const component = <Home user={user} />
+const initProps = {
+  user: {},
+  votes: {},
+  fetchAllVotes: jest.fn(),
+}
+const setup = (props = initProps) => {
+  const component = <Home {...props} />
   const componentWithRouter = (
     <MemoryRouter>
-      <Home user={user} />
+      <Home {...props} />
     </MemoryRouter>
   )
   const wrapper = shallow(component)
