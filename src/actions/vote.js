@@ -44,7 +44,13 @@ export const updateVoteRequest = (id, payload) => ({
   },
 })
 
-export const updateVote = payload => dispatch => {
-  dispatch(updateVoteRequest(payload))
-    .then(() => dispatch(push('/')))
+export const updateVote = (id, payload) => dispatch => {
+  dispatch(updateVoteRequest(id, payload))
+    .then(data => {
+      const result = data && data.response.result
+
+      if (result) {
+        dispatch(push('/'))
+      }
+    })
 }

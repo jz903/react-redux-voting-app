@@ -71,7 +71,8 @@ class Vote extends PureComponent {
   }
 
   render() {
-    const { getFieldDecorator, getFieldValue } = this.props.form
+    const { vote, form } = this.props
+    const { getFieldDecorator, getFieldValue } = form
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -96,14 +97,15 @@ class Vote extends PureComponent {
       },
     }
 
+    getFieldDecorator('options')
     const options = getFieldValue('options')
-    const voteOptions = options.map((option, index) => (
+    const voteOptions = options.map((id, index) => (
       <Form.Item
         {...(index === 0 ? formItemLayout : tailFormItemLayout)}
         label={index === 0 ? 'Options' : ''}
-        key={option.id}
+        key={id}
       >
-        {getFieldDecorator(`options-${option.id}`, {
+        {getFieldDecorator(`options-${id}`, {
           validateTrigger: ['onChange', 'onBlur'],
           rules: [{
             required: true,
@@ -118,7 +120,7 @@ class Vote extends PureComponent {
             className="dynamic-delete-button"
             type="minus-circle-o"
             disabled={options.length === 1}
-            onClick={() => this.remove(option.id)}
+            onClick={() => this.remove(id)}
           />
         ) : null}
       </Form.Item>
@@ -126,7 +128,7 @@ class Vote extends PureComponent {
 
     return (
       <div className="vote container">
-        <h2>Create a new vote</h2>
+        <h2>{`${vote.isOwner ? 'Edit the' : 'Create a new'} vote`}</h2>
         <Form onSubmit={this.handleSubmit} className="login-form">
           <Form.Item
             {...formItemLayout}
@@ -166,7 +168,7 @@ class Vote extends PureComponent {
 }
 
 const mapPropsToFields = ({ vote }) => {
-  const { title, options, multiple } = vote
+  const { title = '', options = [], multiple = false } = vote
   const optionsFields = {}
 
   if (options && options.length) {
@@ -179,13 +181,13 @@ const mapPropsToFields = ({ vote }) => {
 
   return {
     title: {
-      value: title || '',
+      value: title,
     },
     options: {
-      value: options || [],
+      value: options.map(o => o.id),
     },
     multiple: {
-      value: multiple || false,
+      value: multiple,
     },
     ...optionsFields,
   }

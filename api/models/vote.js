@@ -20,7 +20,7 @@ const Option = new Schema({
 
 const Vote = new Schema({
   title: String,
-  mutiple: {
+  multiple: {
     type: Boolean,
     default: false,
   },
