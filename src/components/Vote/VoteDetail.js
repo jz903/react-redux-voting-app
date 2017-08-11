@@ -1,17 +1,14 @@
 import React, { PureComponent } from 'react'
 import { object, func } from 'prop-types'
-import { Link } from 'react-router-dom'
-import { Form, Icon, Input, Button, Checkbox } from 'antd'
+import { Row, Col, Card } from 'antd'
+import VoteDetailForm from './VoteDetailForm'
 
 import './VoteDetail.css'
 
-let uuid = 0
-
-class Vote extends PureComponent {
+class VoteDetail extends PureComponent {
   static propTypes = {
     match: object.isRequired,
     vote: object.isRequired,
-    form: object.isRequired,
     addVote: func.isRequired,
     updateVote: func.isRequired,
     fetchVoteDetail: func.isRequired,
@@ -26,173 +23,38 @@ class Vote extends PureComponent {
     }
   }
 
-  remove = id => {
-    const { form } = this.props
-    const options = form.getFieldValue('options')
-    // We need at least one options
-    if (options.length === 1) return
-
-    form.setFieldsValue({
-      options: options.filter(option => option !== id),
-    })
-  }
-
-  add = () => {
-    uuid += 1
-    const { form } = this.props
-    const options = form.getFieldValue('options')
-    const nextOptions = options.concat(uuid)
-    form.setFieldsValue({
-      options: nextOptions,
-    })
-  }
-
-  handleSubmit = e => {
-    e.preventDefault()
-
-    const { vote, form, addVote, updateVote } = this.props
-
-    form.validateFields((err, values) => {
-      if (!err) {
-        const { options, title, multiple } = values
-        const filteredValues = {
-          title,
-          multiple,
-          options: options.map(id => values[`options-${id}`]),
-        }
-
-        if (vote.id) {
-          updateVote(vote.id, filteredValues)
-        } else {
-          addVote(filteredValues)
-        }
-      }
-    })
-  }
-
   render() {
-    const { vote, form } = this.props
-    const { getFieldDecorator, getFieldValue } = form
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-      },
-    }
-
-    const tailFormItemLayout = {
-      wrapperCol: {
-        xs: {
-          span: 24,
-          offset: 0,
-        },
-        sm: {
-          span: 12,
-          offset: 6,
-        },
-      },
-    }
-
-    getFieldDecorator('options')
-    const options = getFieldValue('options')
-    const voteOptions = options.map((id, index) => (
-      <Form.Item
-        {...(index === 0 ? formItemLayout : tailFormItemLayout)}
-        label={index === 0 ? 'Options' : ''}
-        key={id}
-      >
-        {getFieldDecorator(`options-${id}`, {
-          validateTrigger: ['onChange', 'onBlur'],
-          rules: [{
-            required: true,
-            whitespace: true,
-            message: "Please input option's text or delete this field.",
-          }],
-        })(
-          <Input placeholder="option text" style={{ width: '60%', marginRight: 8 }} />,
-        )}
-        {options.length > 1 ? (
-          <Icon
-            className="dynamic-delete-button"
-            type="minus-circle-o"
-            disabled={options.length === 1}
-            onClick={() => this.remove(id)}
-          />
-        ) : null}
-      </Form.Item>
-    ))
+    const { vote, match, addVote, updateVote } = this.props
+    const isNew = match.params.id === 'new'
+    const isShowVoteDetail = isNew || vote.isOwner
 
     return (
       <div className="vote container">
-        <h2>{`${vote.isOwner ? 'Edit the' : 'Create a new'} vote`}</h2>
-        <Form onSubmit={this.handleSubmit} className="login-form">
-          <Form.Item
-            {...formItemLayout}
-            label="Title"
-          >
-            {getFieldDecorator('title', {
-              rules: [{ required: true }],
-            })(
-              <Input />,
-            )}
-          </Form.Item>
-          {voteOptions}
-          <Form.Item {...tailFormItemLayout}>
-            <Button type="dashed" onClick={this.add} style={{ width: '60%' }}>
-              <Icon type="plus" /> Add Option
-            </Button>
-          </Form.Item>
-          <Form.Item
-            {...tailFormItemLayout}
-          >
-            {getFieldDecorator('multiple', {
-              valuePropName: 'checked',
-            })(
-              <Checkbox>Multiple Choice?</Checkbox>,
-            )}
-          </Form.Item>
-          <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">Save</Button>
-            <Link to="/">
-              <Button size="large">Cancel</Button>
-            </Link>
-          </Form.Item>
-        </Form>
+        <Row gutter={16}>
+          {isShowVoteDetail && <Col span={14}>
+            <Card
+              title={`${isNew ? 'Create a new' : 'Edit the'} vote`}
+              className="box-card"
+            >
+              <VoteDetailForm
+                vote={vote}
+                addVote={addVote}
+                updateVote={updateVote}
+              />
+            </Card>
+          </Col>}
+          <Col span={10}>
+            <Card
+              title="Vote statistics"
+              className="box-card"
+            >
+              Visual Statistics
+            </Card>
+          </Col>
+        </Row>
       </div>
     )
   }
 }
 
-const mapPropsToFields = ({ vote }) => {
-  const { title = '', options = [], multiple = false } = vote
-  const optionsFields = {}
-
-  if (options && options.length) {
-    options.forEach(option => {
-      optionsFields[`options-${option.id}`] = {
-        value: option.text || '',
-      }
-    })
-  }
-
-  return {
-    title: {
-      value: title,
-    },
-    options: {
-      value: options.map(o => o.id),
-    },
-    multiple: {
-      value: multiple,
-    },
-    ...optionsFields,
-  }
-}
-
-export default Form.create({
-  mapPropsToFields,
-})(Vote)
+export default VoteDetail

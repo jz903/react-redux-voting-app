@@ -18,10 +18,18 @@ body {
 .container {
   max-width: 980px;
   margin: 0 auto;
-  padding: 50px;
+  padding: 0 15px;
 }
 
 .ant-layout-content {
   position: relative;
 }
 
+/* box-card layout */
+.box-card {
+  border-radius: 10px;
+}
+
+.box-card .ant-card-head {
+  border-radius: 10px 10px 0 0;
+}
