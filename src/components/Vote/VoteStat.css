@@ -1,0 +1,17 @@
+.vote-stat__legend ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.vote-stat__legend li {
+  margin-right: 1em;
+}
+
+.vote-stat__legend li span:first-child {
+  display: inline-block;
+  width: 2em;
+  height: 1em;
+  vertical-align: middle;
+  margin-right: .5em;
+}

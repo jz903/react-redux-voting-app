@@ -6,6 +6,7 @@
   "dependencies": {
     "antd": "^2.12.5",
     "body-parser": "^1.17.2",
+    "chart.js": "^1.1.1",
     "classnames": "^2.2.5",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
@@ -21,6 +22,7 @@
     "passport-local": "^1.0.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
+    "react-chartjs": "^0.8.0",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.2",

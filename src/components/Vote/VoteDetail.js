@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react'
 import { object, func } from 'prop-types'
 import { Row, Col, Card } from 'antd'
+
 import VoteDetailForm from './VoteDetailForm'
+import VoteStat from './VoteStat'
 
 import './VoteDetail.css'
 
@@ -43,14 +45,17 @@ class VoteDetail extends PureComponent {
               />
             </Card>
           </Col>}
-          <Col span={10}>
-            <Card
-              title="Vote statistics"
-              className="box-card"
-            >
-              Visual Statistics
-            </Card>
-          </Col>
+          {
+            !isNew &&
+            <Col span={10}>
+              <Card
+                title="Vote statistics"
+                className="box-card"
+              >
+                <VoteStat options={vote.options} />
+              </Card>
+            </Col>
+          }
         </Row>
       </div>
     )
