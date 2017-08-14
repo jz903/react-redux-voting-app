@@ -28,7 +28,7 @@ class VoteStat extends PureComponent {
     chartLegend: '',
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     const chartLegend = this.pieChart && this.pieChart.generateLegend()
 
     this.setState({ // eslint-disable-line
@@ -44,7 +44,7 @@ class VoteStat extends PureComponent {
       value: option.number,
       color: colors[colorNames[index % colorNames.length]],
     }))
-    const hasValidData = options.some(option => option.num)
+    const hasValidData = options.some(option => option.number)
 
     return hasValidData && (
       <div className="vote-stat">

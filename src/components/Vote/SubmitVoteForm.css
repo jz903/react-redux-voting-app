@@ -3,6 +3,7 @@
   margin-bottom: 1rem;
 }
 
-.vote-form .ant-radio-wrapper {
+.vote-form .ant-radio-wrapper,
+.vote-form .ant-checkbox-wrapper {
   display: block;
 }

@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react'
-import { bool, object, array, func } from 'prop-types'
+import { string, bool, object, array, func } from 'prop-types'
 import { Form, Button, Checkbox, Radio } from 'antd'
 
 import './SubmitVoteForm.css'
 
 class SubmitVoteForm extends PureComponent {
   static propTypes = {
-    multiple: bool,
-    options: array,
+    id: string.isRequired,
+    multiple: bool.isRequired,
+    options: array.isRequired,
     form: object.isRequired,
     submitVote: func.isRequired,
   }
@@ -20,11 +21,11 @@ class SubmitVoteForm extends PureComponent {
   handleSubmit = e => {
     e.preventDefault()
 
-    const { form } = this.props
+    const { id, form, submitVote } = this.props
 
     form.validateFields((err, values) => {
       if (!err) {
-        console.log(values)
+        submitVote(id, values)
       }
     })
   }
@@ -36,19 +37,23 @@ class SubmitVoteForm extends PureComponent {
       label: option.text,
       value: option.id,
     }))
-    const multipleOptions = getFieldDecorator('options')(
+    const voteOptions = (
       <Form.Item>
         {
-          multiple ?
-            <Checkbox.Group options={formOptions} /> :
-            <Radio.Group options={formOptions} />
+          getFieldDecorator('options', {
+            rules: [{ required: true, message: 'Please choose one option at least' }],
+          })(
+            multiple ?
+              <Checkbox.Group options={formOptions} /> :
+              <Radio.Group options={formOptions} />,
+          )
         }
-      </Form.Item>,
+      </Form.Item>
     )
 
     return (
       <Form onSubmit={this.handleSubmit} className="vote-form">
-        {multipleOptions}
+        {voteOptions}
         <Form.Item>
           <Button type="primary" htmlType="submit">Submit</Button>
         </Form.Item>

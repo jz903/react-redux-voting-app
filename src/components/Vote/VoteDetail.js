@@ -15,6 +15,7 @@ class VoteDetail extends PureComponent {
     addVote: func.isRequired,
     updateVote: func.isRequired,
     fetchVoteDetail: func.isRequired,
+    submitVote: func.isRequired,
   }
 
   componentDidMount() {
@@ -27,16 +28,17 @@ class VoteDetail extends PureComponent {
   }
 
   render() {
-    const { vote, match, addVote, updateVote } = this.props
-    const isNew = match.params.id === 'new'
-    const isShowVoteDetail = isNew || vote.isOwner
+    const { match, vote, addVote, updateVote, submitVote } = this.props
+    const isVoteValid = vote.id
+    const isNewVote = match.params.id === 'new'
+    const isShowVoteDetail = (isVoteValid && vote.isOwner) || isNewVote
 
     return (
       <div className="vote container">
         <Row gutter={16}>
-          {isShowVoteDetail && <Col span={14}>
+          {isShowVoteDetail && <Col span={isVoteValid ? 14 : 24}>
             <Card
-              title={`${isNew ? 'Create a new' : 'Edit the'} vote`}
+              title={`${isVoteValid ? 'Edit the' : 'Create a new'} vote`}
               className="box-card"
             >
               <EditVoteForm
@@ -47,15 +49,20 @@ class VoteDetail extends PureComponent {
             </Card>
           </Col>}
           {
-            !isNew &&
-            <Col span={10}>
+            isVoteValid &&
+            <Col span={isShowVoteDetail ? 10 : 24}>
               <Card
-                title="Vote statistics"
+                title="Vote Detail"
                 className="box-card"
               >
                 <VoteStat options={vote.options} />
                 <h3 className="vote-form__title">{vote.title}</h3>
-                <SubmitVoteForm options={vote.options} />
+                <SubmitVoteForm
+                  id={vote.id}
+                  options={vote.options}
+                  multiple={vote.multiple}
+                  submitVote={submitVote}
+                />
               </Card>
             </Col>
           }

@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
 router.post('/new', (req, res) => {
   const { options, ...rest } = req.body
   const newVote = new Vote({
-    options: options.map(text => ({
+    options: options.map(({ text }) => ({
       text,
     })),
     owner: {
@@ -48,13 +48,9 @@ router.put('/:id', (req, res) => {
   const { options, ...rest } = req.body
 
   Vote.findOneAndUpdate(
-    { id: voteId },
-    { $set: {
-      options: options.map(text => ({
-        text,
-      })),
-      ...rest,
-    },
+    { _id: voteId },
+    {
+      $set: { ...rest },
     },
     { new: true }, // return the doc after updates in callback
     (err, vote) => {
@@ -70,7 +66,37 @@ router.put('/:id', (req, res) => {
         })
       }
 
-      return res.json(vote)
+      // remove options which are not in req.body
+      vote.options.forEach(({ id }) => {
+        const isNotInReq = options.every(({ id: optionId }) => id !== optionId)
+
+        if (isNotInReq) {
+          vote.options.id(id).remove()
+        }
+      })
+
+      // update/add options if exists/new
+      options.forEach(({ id: optionId, text }) => {
+        const option = vote.options.id(optionId)
+
+        if (option) {
+          option.text = text
+        } else {
+          vote.options.push({
+            text,
+          })
+        }
+      })
+
+      return vote.save((saveErr, saveVote) => {
+        if (saveErr) {
+          return res.status(400).send({
+            error: err.message,
+          })
+        }
+
+        return res.json(saveVote)
+      })
     },
   )
 })
@@ -97,6 +123,58 @@ router.get('/:id', (req, res) => {
       isOwner: user && (vote.owner.id === user.id),
     })
   })
+})
+
+router.put('/:id/options', (req, res) => {
+  const voteId = req.params.id
+  const { options } = req.body
+  const user = req.user
+
+  Vote.findById(
+    { _id: voteId },
+    (err, vote) => {
+      if (err) {
+        return res.status(400).send({
+          error: err.message,
+        })
+      }
+
+      if (!vote) {
+        return res.status(400).send({
+          error: 'VoteNotExists',
+        })
+      }
+
+      if (typeof options === 'string') {
+        // options is a string when radio
+        const option = vote.options.id(options)
+
+        option.number += 1
+      } else {
+        // options is an array when checkbox
+        options.forEach(optionId => {
+          const option = vote.options.id(optionId)
+
+          if (option) {
+            option.number += 1
+          }
+        })
+      }
+
+      return vote.save((saveErr, saveVote) => {
+        if (saveErr) {
+          return res.status(400).send({
+            error: err.message,
+          })
+        }
+
+        return res.json({
+          ...saveVote.toObject(),
+          isOwner: user && (saveVote.owner.id === user.id),
+        })
+      })
+    },
+  )
 })
 
 export default router

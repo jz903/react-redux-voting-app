@@ -54,3 +54,13 @@ export const updateVote = (id, payload) => dispatch => {
       }
     })
 }
+
+export const submitVote = (id, payload) => ({
+  [CALL_API]: {
+    type: actionTypes.SUBMIT_VOTE,
+    endpoint: `/vote/${id}/options`,
+    method: 'PUT',
+    payload,
+    schema: Schemas.VOTE,
+  },
+})

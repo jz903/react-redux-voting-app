@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import VoteDetail from '../components/Vote/VoteDetail'
-import { addVote, updateVote, fetchVoteDetail } from '../actions/vote'
+import { addVote, updateVote, fetchVoteDetail, submitVote } from '../actions/vote'
 import { getCurrentVote } from '../selectors'
 
 const mapStateToProps = (state, ownProps) => ({
@@ -16,6 +16,9 @@ const mapDispatchToProps = dispatch => ({
   },
   fetchVoteDetail: id => {
     dispatch(fetchVoteDetail(id))
+  },
+  submitVote: (id, data) => {
+    dispatch(submitVote(id, data))
   },
 })
 

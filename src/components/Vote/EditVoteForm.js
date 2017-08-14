@@ -45,7 +45,10 @@ class EditVoteForm extends PureComponent {
         const filteredValues = {
           title,
           multiple,
-          options: options.map(id => values[`options-${id}`]),
+          options: options.map(id => ({
+            id,
+            text: values[`options-${id}`],
+          })),
         }
 
         if (vote.id) {
