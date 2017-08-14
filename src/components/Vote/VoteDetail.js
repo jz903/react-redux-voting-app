@@ -2,8 +2,9 @@ import React, { PureComponent } from 'react'
 import { object, func } from 'prop-types'
 import { Row, Col, Card } from 'antd'
 
-import VoteDetailForm from './VoteDetailForm'
+import EditVoteForm from './EditVoteForm'
 import VoteStat from './VoteStat'
+import SubmitVoteForm from './SubmitVoteForm'
 
 import './VoteDetail.css'
 
@@ -38,7 +39,7 @@ class VoteDetail extends PureComponent {
               title={`${isNew ? 'Create a new' : 'Edit the'} vote`}
               className="box-card"
             >
-              <VoteDetailForm
+              <EditVoteForm
                 vote={vote}
                 addVote={addVote}
                 updateVote={updateVote}
@@ -53,6 +54,8 @@ class VoteDetail extends PureComponent {
                 className="box-card"
               >
                 <VoteStat options={vote.options} />
+                <h3 className="vote-form__title">{vote.title}</h3>
+                <SubmitVoteForm options={vote.options} />
               </Card>
             </Col>
           }

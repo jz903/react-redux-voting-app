@@ -9,3 +9,11 @@
 .ant-btn {
   margin-right: .5rem;
 }
+
+.vote-form__title {
+  margin-bottom: 1rem;
+}
+
+.vote-stat + .vote-form__title {
+  margin-top: 2rem;
+}

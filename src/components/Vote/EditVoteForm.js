@@ -5,7 +5,7 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd'
 
 let uuid = 0
 
-class VoteDetailForm extends PureComponent {
+class EditVoteForm extends PureComponent {
   static propTypes = {
     vote: object.isRequired,
     form: object.isRequired,
@@ -179,4 +179,4 @@ const mapPropsToFields = ({ vote }) => {
 
 export default Form.create({
   mapPropsToFields,
-})(VoteDetailForm)
+})(EditVoteForm)
