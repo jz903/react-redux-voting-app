@@ -1,4 +1,6 @@
 import { push } from 'react-router-redux'
+import { message } from 'antd'
+
 import { CALL_API } from '../middleware/api'
 import { Schemas } from '../constants/entities'
 import * as actionTypes from '../constants/actionTypes'
@@ -31,7 +33,12 @@ export const addVoteRequest = payload => ({
 
 export const addVote = payload => dispatch => {
   dispatch(addVoteRequest(payload))
-    .then(() => dispatch(push('/')))
+    .then(({ response }) => {
+      if (response) {
+        dispatch(push('/'))
+        message.success('Vote has been created')
+      }
+    })
 }
 
 export const updateVoteRequest = (id, payload) => ({
@@ -46,11 +53,10 @@ export const updateVoteRequest = (id, payload) => ({
 
 export const updateVote = (id, payload) => dispatch => {
   dispatch(updateVoteRequest(id, payload))
-    .then(data => {
-      const result = data && data.response.result
-
-      if (result) {
+    .then(({ response }) => {
+      if (response) {
         dispatch(push('/'))
+        message.success('Vote has been updated')
       }
     })
 }
@@ -79,7 +85,7 @@ export const deleteVote = id => (dispatch, getState) => {
     })
 }
 
-export const submitVote = (id, payload) => ({
+export const submitVoteRequest = (id, payload) => ({
   [CALL_API]: {
     type: actionTypes.SUBMIT_VOTE,
     endpoint: `/vote/${id}/options`,
@@ -88,3 +94,12 @@ export const submitVote = (id, payload) => ({
     schema: Schemas.VOTE,
   },
 })
+
+export const submitVote = (id, payload) => dispatch => {
+  dispatch(submitVoteRequest(id, payload))
+    .then(({ response }) => {
+      if (response) {
+        message.success('Vote statistics has been updated')
+      }
+    })
+}

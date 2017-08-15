@@ -6,9 +6,7 @@ import { ConnectedRouter } from 'react-router-redux'
 import { Layout } from 'antd'
 
 import { fetchUser } from '../actions/user'
-import { hideAlert } from '../actions/system'
 import Header from './Header'
-import TopAlert from './TopAlert'
 import Loading from './Loading'
 import Home from './HomePage'
 import SignIn from './SignInPage'
@@ -33,12 +31,6 @@ class Root extends PureComponent {
   render() {
     const { store, history } = this.props
 
-    // When the route changes, clear Alerts.
-    history.listen(() => {
-      // hide **Alerts** from API
-      store.dispatch(hideAlert())
-    })
-
     return (
       <Provider store={store}>
         {/* ConnectedRouter will use the store from Provider automatically */}
@@ -46,7 +38,6 @@ class Root extends PureComponent {
           <Layout className="layout">
             <Header />
             <Content>
-              <TopAlert />
               <Route exact path="/" component={Home} />
               <Route path="/vote/:id" component={Vote} />
               <Route path="/login" component={SignIn} />

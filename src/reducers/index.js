@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
+import { message } from 'antd'
 
 import * as ActionTypes from '../constants/actionTypes'
 
@@ -28,50 +29,23 @@ const entities = (state = { users: {}, votes: {} }, action) => {
 
 const system = (
   state = {
-    alert: false,
     isLoading: false,
   },
   action,
 ) => {
-  const { type, error, success, isLoading } = action
-  const newState = {}
+  const { error, success, isLoading } = action
 
-  switch (type) {
-    case ActionTypes.SHOW_ALERT:
-      return {
-        ...state,
-        alert: {
-          ...action.alert,
-        },
-      }
-    case ActionTypes.HIDE_ALERT:
-      return {
-        ...state,
-        alert: false,
-      }
-    default:
-      if (error) {
-        newState.alert = {
-          type: 'error',
-          message: error,
-        }
-      }
+  if (error) {
+    message.error(error)
+  }
 
-      if (success) {
-        newState.alert = {
-          type: 'success',
-          message: success,
-        }
-      }
+  if (success) {
+    message.success(success)
+  }
 
-      if (isLoading !== undefined) {
-        newState.isLoading = isLoading
-      }
-
-      return {
-        ...state,
-        ...newState,
-      }
+  return {
+    ...state,
+    isLoading,
   }
 }
 
