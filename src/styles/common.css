@@ -33,3 +33,13 @@ body {
 .box-card .ant-card-head {
   border-radius: 10px 10px 0 0;
 }
+
+/* vote-card */
+.vote-card .ant-card-head-title {
+  width: calc(100% - 50px);
+}
+
+.vote-card .ant-card-extra {
+  right: 10px;
+  top: 10px;
+}

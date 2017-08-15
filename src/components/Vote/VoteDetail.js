@@ -5,6 +5,7 @@ import { Row, Col, Card } from 'antd'
 import EditVoteForm from './EditVoteForm'
 import VoteStat from './VoteStat'
 import SubmitVoteForm from './SubmitVoteForm'
+import VoteCorner from './VoteCorner'
 
 import './VoteDetail.css'
 
@@ -14,6 +15,7 @@ class VoteDetail extends PureComponent {
     vote: object.isRequired,
     addVote: func.isRequired,
     updateVote: func.isRequired,
+    deleteVote: func.isRequired,
     fetchVoteDetail: func.isRequired,
     submitVote: func.isRequired,
   }
@@ -27,9 +29,17 @@ class VoteDetail extends PureComponent {
     }
   }
 
+  handleDelete = () => {
+    const { vote, deleteVote } = this.props
+
+    if (vote.id) {
+      deleteVote(vote.id)
+    }
+  }
+
   render() {
     const { match, vote, addVote, updateVote, submitVote } = this.props
-    const isVoteValid = vote.id
+    const isVoteValid = !!vote.id
     const isNewVote = match.params.id === 'new'
     const isShowVoteDetail = (isVoteValid && vote.isOwner) || isNewVote
 
@@ -53,7 +63,8 @@ class VoteDetail extends PureComponent {
             <Col span={isShowVoteDetail ? 10 : 24}>
               <Card
                 title="Vote Detail"
-                className="box-card"
+                className="box-card vote-card"
+                extra={<VoteCorner showDelete={vote.isOwner} onDelete={this.handleDelete} />}
               >
                 <VoteStat options={vote.options} />
                 <h3 className="vote-form__title">{vote.title}</h3>

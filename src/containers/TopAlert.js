@@ -5,8 +5,6 @@ import { Alert } from 'antd'
 
 import * as actions from '../actions/system'
 
-import './TopAlert.css'
-
 const TopAlert = ({
   alert,
   hideAlert,

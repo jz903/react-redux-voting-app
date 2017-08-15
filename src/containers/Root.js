@@ -46,12 +46,12 @@ class Root extends PureComponent {
           <Layout className="layout">
             <Header />
             <Content>
+              <TopAlert />
               <Route exact path="/" component={Home} />
               <Route path="/vote/:id" component={Vote} />
               <Route path="/login" component={SignIn} />
               <Route path="/join" component={SignUp} />
               <Route path="/logout" component={Logout} />
-              <TopAlert />
             </Content>
             <Footer>
               FCC VOTING APP ©2017 Chris Zhou

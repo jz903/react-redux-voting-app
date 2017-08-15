@@ -12,6 +12,7 @@ class Home extends PureComponent {
     user: object.isRequired,
     votes: object.isRequired,
     fetchAllVotes: func.isRequired,
+    deleteVote: func.isRequired,
   }
 
   componentDidMount() {
@@ -21,7 +22,7 @@ class Home extends PureComponent {
   }
 
   render() {
-    const { user, votes } = this.props
+    const { user, votes, deleteVote } = this.props
     const name = (user && user.displayName) || ''
     const isEmpty = Object.keys(votes).length === 0
 
@@ -45,7 +46,7 @@ class Home extends PureComponent {
           <Row gutter={16}>
             {Object.keys(votes).map(key => (
               <Col span={8} key={key}>
-                <VoteCard vote={votes[key]}>Card content</VoteCard>
+                <VoteCard vote={votes[key]} deleteVote={deleteVote}>Card content</VoteCard>
               </Col>
             ))}
           </Row>

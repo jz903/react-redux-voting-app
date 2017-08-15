@@ -55,6 +55,14 @@ export const updateVote = (id, payload) => dispatch => {
     })
 }
 
+export const deleteVote = id => ({
+  [CALL_API]: {
+    type: actionTypes.DELETE_VOTE,
+    endpoint: `/vote/${id}`,
+    method: 'DELETE',
+  },
+})
+
 export const submitVote = (id, payload) => ({
   [CALL_API]: {
     type: actionTypes.SUBMIT_VOTE,
