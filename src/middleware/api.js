@@ -96,7 +96,7 @@ export default store => next => action => {
           messeage: error.error,
         }))
       }
-      next(actionWith({
+      return next(actionWith({
         type: failureType,
         error: error.error || 'Something bad happened',
         isLoading: false,

@@ -8,6 +8,7 @@ const showConfirm = onDelete => {
     content: 'This vote will be permanently removed.',
     okText: 'Delete',
     cancelText: 'Cancel',
+    iconType: 'exclamation-circle',
     onOk() {
       onDelete()
     },

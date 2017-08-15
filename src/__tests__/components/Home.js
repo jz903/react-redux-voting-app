@@ -9,6 +9,7 @@ const initProps = {
   user: {},
   votes: {},
   fetchAllVotes: jest.fn(),
+  deleteVote: jest.fn(),
 }
 const setup = (props = initProps) => {
   const component = <Home {...props} />

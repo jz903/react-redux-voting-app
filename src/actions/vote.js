@@ -2,6 +2,7 @@ import { push } from 'react-router-redux'
 import { CALL_API } from '../middleware/api'
 import { Schemas } from '../constants/entities'
 import * as actionTypes from '../constants/actionTypes'
+import { showAlert } from './system'
 
 export const fetchAllVotes = () => ({
   [CALL_API]: {
@@ -55,13 +56,33 @@ export const updateVote = (id, payload) => dispatch => {
     })
 }
 
-export const deleteVote = id => ({
+export const deleteVoteRequest = id => ({
   [CALL_API]: {
     type: actionTypes.DELETE_VOTE,
     endpoint: `/vote/${id}`,
     method: 'DELETE',
   },
 })
+
+export const deleteVote = id => (dispatch, getState) => {
+  dispatch(deleteVoteRequest(id))
+    .then(({ response }) => {
+      if (response.success) {
+        const { router } = getState()
+        if (router.location.pathname === '/') {
+          // fetch all votes again in homepage
+          dispatch(fetchAllVotes())
+        } else {
+          // redirect to homepage
+          dispatch(push('/'))
+        }
+        dispatch(showAlert({
+          type: 'success',
+          message: response.success,
+        }))
+      }
+    })
+}
 
 export const submitVote = (id, payload) => ({
   [CALL_API]: {

@@ -177,4 +177,26 @@ router.put('/:id/options', (req, res) => {
   )
 })
 
+router.delete('/:id', (req, res) => {
+  const voteId = req.params.id
+
+  Vote.findOneAndRemove({ _id: voteId }, (err, vote) => {
+    if (err) {
+      return res.status(400).send({
+        error: err.message,
+      })
+    }
+
+    if (!vote) {
+      return res.status(400).send({
+        error: 'VoteNotExists',
+      })
+    }
+
+    return res.json({
+      success: `The "${vote.title}" vote has been removed`,
+    })
+  })
+})
+
 export default router

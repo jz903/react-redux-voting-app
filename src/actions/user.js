@@ -24,8 +24,8 @@ export const fetchUser = () => (dispatch, getState) => {
 
   if (BLACK_LIST_TO_FETCH_USER.indexOf(pathname) === -1) {
     dispatch(fetchUserRequest())
-      .then(data => {
-        const result = data && data.response.result
+      .then(({ response }) => {
+        const result = response && response.result
 
         if (result) {
           dispatch(updateCurrentUserId(result))
@@ -48,8 +48,8 @@ export const signInRequest = payload => ({
 
 export const signIn = payload => dispatch => {
   dispatch(signInRequest(payload))
-    .then(data => {
-      const result = data && data.response.result
+    .then(({ response }) => {
+      const result = response && response.result
 
       if (result) {
         dispatch(updateCurrentUserId(result))
@@ -72,8 +72,8 @@ export const signUpRequest = payload => ({
 
 export const signUp = payload => dispatch => {
   dispatch(signUpRequest(payload))
-    .then(data => {
-      const result = data && data.response.result
+    .then(({ response }) => {
+      const result = response && response.result
 
       if (result) {
         dispatch(updateCurrentUserId(result))
@@ -93,8 +93,8 @@ export const logoutRequest = () => ({
 
 export const logout = () => dispatch => {
   dispatch(logoutRequest())
-    .then(data => {
-      if (data && data.type === `${actionTypes.LOGOUT}_SUCCESS`) {
+    .then(({ type }) => {
+      if (type === `${actionTypes.LOGOUT}_SUCCESS`) {
         dispatch(replace('/login'))
       }
     })
