@@ -40,10 +40,11 @@
     "test": "react-scripts test",
     "test-all": "CI=true npm run test",
     "eject": "react-scripts eject",
-    "server": "concurrently \"npm run build\" \"NODE_ENV=production npm run api\"",
+    "server": "NODE_ENV=production npm run api",
     "api": "babel-node api/index.js --presets es2015,stage-2",
     "lint": "eslint src; exit 0",
-    "prepush": "npm run lint && npm run test-all"
+    "prepush": "npm run lint && npm run test-all",
+    "postinstall": "npm run build"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
