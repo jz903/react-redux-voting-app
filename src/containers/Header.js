@@ -6,11 +6,9 @@ import Header from '../components/Header'
 
 const HeaderContainer = ({
   user,
-}) => {
-  const isLogged = user && user.id
-
-  return isLogged ? <Header user={user} /> : null
-}
+}) => (
+  <Header user={user} />
+)
 
 HeaderContainer.propTypes = {
   user: object,

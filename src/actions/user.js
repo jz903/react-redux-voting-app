@@ -16,6 +16,7 @@ export const fetchUserRequest = () => ({
     type: actionTypes.FETCH_USER,
     endpoint: '/user',
     schema: Schemas.USER,
+    suppressError: true,
   },
 })
 

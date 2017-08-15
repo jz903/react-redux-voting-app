@@ -20,33 +20,36 @@ class HeaderComp extends PureComponent {
     const { user } = this.props
 
     return (
-      <Header>
+      <Header className="app-header">
         <Row gutter={16}>
-          <Col className="gutter-row" sm={24} md={6}>
+          <Col className="gutter-row" span={12}>
             <h1 className="header-title">
-              <Icon
-                className="trigger"
-                type="menu-unfold"
-                onClick={this.toggle}
-              />
-              <a href="/">FCC VOTING APP</a>
+              <Link to="/">FCC VOTING APP</Link>
             </h1>
           </Col>
-          <Col className="gutter-row" sm={24} md={18}>
-            <Menu
-              className="header-nav"
-              theme="dark"
-              mode="horizontal"
-            >
-              <Menu.SubMenu title={<span><Icon type="user" />{user.displayName}</span>}>
-                <Menu.Item key="settings">
-                  <Link to="/settings">Settings</Link>
-                </Menu.Item>
-                <Menu.Item key="logout">
-                  <a href="/logout">Log out</a>
-                </Menu.Item>
-              </Menu.SubMenu>
-            </Menu>
+          <Col className="gutter-row header-nav" span={12}>
+            {
+              user.id ?
+                <Menu
+                  theme="dark"
+                  mode="horizontal"
+                >
+                  <Menu.SubMenu title={<span><Icon type="user" />{user.displayName}</span>}>
+                    <Menu.Item key="settings">
+                      <Link to="/settings">Settings</Link>
+                    </Menu.Item>
+                    <Menu.Item key="logout">
+                      <a href="/logout">Log out</a>
+                    </Menu.Item>
+                  </Menu.SubMenu>
+                </Menu>
+                :
+                <div className="header-nav__login">
+                  <Link to="/login">Sign in</Link>
+                  &nbsp;&nbsp;or&nbsp;&nbsp;
+                  <Link to="/join">Sign up</Link>
+                </div>
+            }
           </Col>
         </Row>
       </Header>

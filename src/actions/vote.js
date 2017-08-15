@@ -2,7 +2,6 @@ import { push } from 'react-router-redux'
 import { CALL_API } from '../middleware/api'
 import { Schemas } from '../constants/entities'
 import * as actionTypes from '../constants/actionTypes'
-import { showAlert } from './system'
 
 export const fetchAllVotes = () => ({
   [CALL_API]: {
@@ -67,7 +66,7 @@ export const deleteVoteRequest = id => ({
 export const deleteVote = id => (dispatch, getState) => {
   dispatch(deleteVoteRequest(id))
     .then(({ response }) => {
-      if (response.success) {
+      if (response) {
         const { router } = getState()
         if (router.location.pathname === '/') {
           // fetch all votes again in homepage
@@ -76,10 +75,6 @@ export const deleteVote = id => (dispatch, getState) => {
           // redirect to homepage
           dispatch(push('/'))
         }
-        dispatch(showAlert({
-          type: 'success',
-          message: response.success,
-        }))
       }
     })
 }

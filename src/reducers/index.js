@@ -33,7 +33,7 @@ const system = (
   },
   action,
 ) => {
-  const { type, error, isLoading } = action
+  const { type, error, success, isLoading } = action
   const newState = {}
 
   switch (type) {
@@ -54,6 +54,13 @@ const system = (
         newState.alert = {
           type: 'error',
           message: error,
+        }
+      }
+
+      if (success) {
+        newState.alert = {
+          type: 'success',
+          message: success,
         }
       }
 

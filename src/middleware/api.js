@@ -1,8 +1,5 @@
-import { push } from 'react-router-redux'
 import { normalize } from 'normalizr'
 import { camelizeKeys } from 'humps'
-
-import { showAlert } from '../actions/system'
 
 const defaultHTTPHeaders = {
   Accept: 'application/json',
@@ -51,7 +48,7 @@ export default store => next => action => {
   }
 
   let { endpoint } = callAPI
-  const { schema, type } = callAPI
+  const { schema, type, suppressError } = callAPI
   const types = [
     type,
     `${type}_SUCCESS`,
@@ -85,22 +82,13 @@ export default store => next => action => {
     response => next(actionWith({
       response,
       type: successType,
+      success: response.success,
       isLoading: false,
     })),
-    error => {
-      if (error.error === 'NotSignIn') {
-        store.dispatch(push('/login'))
-      } else {
-        store.dispatch(showAlert({
-          type: 'error',
-          messeage: error.error,
-        }))
-      }
-      return next(actionWith({
-        type: failureType,
-        error: error.error || 'Something bad happened',
-        isLoading: false,
-      }))
-    },
+    error => next(actionWith({
+      type: failureType,
+      error: !suppressError && (error.error || 'Something bad happened'),
+      isLoading: false,
+    })),
   )
 }

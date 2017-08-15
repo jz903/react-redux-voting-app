@@ -1,24 +1,22 @@
-.header-title {
+.app-header a {
   color: #fff;
 }
 
-.header-title a {
-  color: #fff;
+.app-header a:focus {
+  text-decoration: none;
 }
 
-.trigger {
-  font-size: 1.5rem;
-  line-height: 64px;
-  padding: 0 16px;
-  cursor: pointer;
-  transition: color .3s;
-}
-
-.trigger:hover {
-  color: #108ee9;
-}
-
-.header-nav.ant-menu {
-  line-height: 4rem;
+.header-nav .ant-menu {
   float: right;
+  line-height: 4rem;
+}
+
+.header-nav__login {
+  float: right;
+  color: rgba(255, 255, 255, 0.67);
+  margin-top: -1px;
+}
+
+.header-nav__login a {
+  color: #fff;
 }
