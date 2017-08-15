@@ -32,7 +32,6 @@ exports[`Home component should render right thing and don't change unexpected 1`
       <button
         className="ant-btn add-vote ant-btn-primary"
         onClick={[Function]}
-        onMouseUp={[Function]}
         type="button"
       >
         <i
