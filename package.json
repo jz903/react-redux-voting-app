@@ -36,12 +36,12 @@
   },
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"npm run api\"",
-    "build": "react-scripts build",
+    "build": "react-scripts build && babel api -d dist --presets es2015,stage-2",
     "test": "react-scripts test",
     "test-all": "CI=true npm run test",
     "eject": "react-scripts eject",
-    "server": "NODE_ENV=production npm run api",
-    "api": "babel-node api/index.js --presets es2015,stage-2",
+    "server": "NODE_ENV=production node dist/index.js",
+    "api": "nodemon --exec babel-node api/index.js --presets es2015,stage-2",
     "lint": "eslint src; exit 0",
     "prepush": "npm run lint && npm run test-all",
     "postinstall": "npm run build"
@@ -59,6 +59,7 @@
     "eslint-plugin-react": "^7.1.0",
     "husky": "^0.14.3",
     "lint-staged": "^4.0.2",
+    "nodemon": "^1.11.0",
     "prettier": "^1.5.3",
     "react-test-renderer": "^15.6.1"
   }
