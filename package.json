@@ -41,7 +41,7 @@
     "test-all": "CI=true npm run test",
     "eject": "react-scripts eject",
     "server": "NODE_ENV=production node dist/index.js",
-    "api": "nodemon --exec babel-node api/index.js --presets es2015,stage-2",
+    "api": "nodemon --exec babel-node api --presets es2015,stage-2",
     "lint": "eslint src; exit 0",
     "prepush": "npm run lint && npm run test-all",
     "postinstall": "npm run build"
