@@ -6,18 +6,28 @@ const router = express.Router()
 router.get('/', (req, res) => {
   const user = req.user
 
-  Vote.find({}, (err, votes) => {
-    if (err) {
-      return res.status(400).send({
-        error: err.message,
-      })
-    }
+  Vote.find(
+    {},
+    {},
+    {
+      sort: {
+        date: -1,
+      },
+    },
+    (err, votes) => {
+      if (err) {
+        return res.status(400).send({
+          error: err.message,
+        })
+      }
 
-    return res.json(votes.map(vote => ({
-      ...vote.toObject(),
-      isOwner: user && (vote.owner.id === user.id),
-    })))
-  })
+      return res.json(
+        votes.map(vote => ({
+          ...vote.toObject(),
+          isOwner: user && (vote.owner.id === user.id),
+        })),
+      )
+    })
 })
 
 router.post('/new', (req, res) => {
@@ -50,7 +60,10 @@ router.put('/:id', (req, res) => {
   Vote.findOneAndUpdate(
     { _id: voteId },
     {
-      $set: { ...rest },
+      $set: {
+        ...rest,
+        date: Date.now(),
+      },
     },
     { new: true }, // return the doc after updates in callback
     (err, vote) => {

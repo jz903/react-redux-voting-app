@@ -36,14 +36,17 @@ class Home extends PureComponent {
         </div>
         <p className="App-intro">
           {isEmpty && <span>There is no votes yet.<br /></span>}
-          <Link to="/vote/new">
-            <Button type="primary" icon="file-add" className="add-vote">
-              Add a new vote
-            </Button>
-          </Link>
+          {
+            user.id &&
+            <Link to="/vote/new">
+              <Button type="primary" icon="file-add" className="add-vote">
+                Add a new vote
+              </Button>
+            </Link>
+          }
         </p>
         <div className="App-votes">
-          <Row gutter={16}>
+          <Row type="flex" gutter={16}>
             {Object.keys(votes).map(key => (
               <Col span={8} key={key}>
                 <VoteCard vote={votes[key]} deleteVote={deleteVote}>Card content</VoteCard>

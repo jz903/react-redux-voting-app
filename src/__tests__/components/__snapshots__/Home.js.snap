@@ -25,29 +25,12 @@ exports[`Home component should render right thing and don't change unexpected 1`
       There is no votes yet.
       <br />
     </span>
-    <a
-      href="/vote/new"
-      onClick={[Function]}
-    >
-      <button
-        className="ant-btn add-vote ant-btn-primary"
-        onClick={[Function]}
-        type="button"
-      >
-        <i
-          className="anticon anticon-file-add"
-        />
-        <span>
-          Add a new vote
-        </span>
-      </button>
-    </a>
   </p>
   <div
     className="App-votes"
   >
     <div
-      className="ant-row"
+      className="ant-row-flex"
       style={
         Object {
           "marginLeft": -8,

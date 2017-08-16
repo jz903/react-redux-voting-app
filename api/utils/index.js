@@ -8,5 +8,5 @@ export const transformModal = (doc, ret) => {
   }
 }
 
-export const isProduction = process.env === 'production'
+export const isProduction = process.env.NODE_ENV === 'production'
 export const homePageUrl = isProduction ? '/' : 'http://localhost:3000/'

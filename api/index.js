@@ -10,7 +10,7 @@ import mongoose from 'mongoose'
 import routes from './routes'
 
 const app = express()
-const dbUrl = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/fcc-voting'
+const dbUrl = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/react-redux-voting'
 
 mongoose.connect(dbUrl)
 
