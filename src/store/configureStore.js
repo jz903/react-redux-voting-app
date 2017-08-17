@@ -6,12 +6,13 @@ import rootReducer from '../reducers'
 import api from '../middleware/api'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const isProd = process.env.NODE_ENV === 'production'
 
 const configureStore = history => {
   const store = createStore(
     rootReducer,
     composeEnhancers(
-      applyMiddleware(routerMiddleware(history), thunk, api, createLogger()),
+      applyMiddleware(routerMiddleware(history), thunk, api, isProd ? null : createLogger()),
     ),
   )
 

@@ -8,11 +8,6 @@ import { schema } from 'normalizr'
 
 // Read more about Normalizr: https://github.com/paularmstrong/normalizr
 
-// GitHub's API may return results with uppercase letters while the query
-// doesn't contain any. For example, "someuser" could result in "SomeUser"
-// leading to a frozen UI as it wouldn't find "someuser" in the entities.
-// That's why we're forcing lower cases down there.
-
 export const userSchema = new schema.Entity('users', {}, {
   idAttribute: user => user.id,
 })
