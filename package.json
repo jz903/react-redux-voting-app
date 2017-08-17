@@ -1,5 +1,5 @@
 {
-  "name": "fcc-voting-app",
+  "name": "react-redux-voting-app",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3001/",
