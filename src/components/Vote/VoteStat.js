@@ -28,7 +28,7 @@ class VoteStat extends PureComponent {
     chartLegend: '',
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     const chartLegend = this.pieChart && this.pieChart.generateLegend()
 
     this.setState({ // eslint-disable-line

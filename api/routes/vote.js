@@ -32,6 +32,13 @@ router.get('/', (req, res) => {
 
 router.post('/new', (req, res) => {
   const { options, ...rest } = req.body
+
+  if (!req.user) {
+    res.status(401).send({
+      error: 'NotSignIn',
+    })
+  }
+
   const newVote = new Vote({
     options: options.map(({ text }) => ({
       text,

@@ -31,11 +31,6 @@ class Root extends PureComponent {
   render() {
     const { store, history } = this.props
 
-    history.listen(() => {
-      // When the route changes, fetch user again.
-      store.dispatch(fetchUser())
-    })
-
     return (
       <Provider store={store}>
         {/* ConnectedRouter will use the store from Provider automatically */}

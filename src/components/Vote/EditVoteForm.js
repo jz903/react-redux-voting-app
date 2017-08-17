@@ -155,16 +155,14 @@ class EditVoteForm extends PureComponent {
 }
 
 const mapPropsToFields = ({ vote }) => {
-  const { title = '', options = [], multiple = false } = vote
+  const { title = '', options = [{ id: 0 }], multiple = false } = vote
   const optionsFields = {}
 
-  if (options && options.length) {
-    options.forEach(option => {
-      optionsFields[`options-${option.id}`] = {
-        value: option.text || '',
-      }
-    })
-  }
+  options.forEach(option => {
+    optionsFields[`options-${option.id}`] = {
+      value: option.text || '',
+    }
+  })
 
   return {
     title: {
