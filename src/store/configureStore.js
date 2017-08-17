@@ -6,8 +6,8 @@ import rootReducer from '../reducers'
 import api from '../middleware/api'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-const isProd = process.env.NODE_ENV === 'production'
-const loggerMiddleware = isProd && createLogger()
+const isDev = process.env.NODE_ENV === 'development'
+const loggerMiddleware = isDev ? [createLogger()] : []
 
 const configureStore = history => {
   const store = createStore(
