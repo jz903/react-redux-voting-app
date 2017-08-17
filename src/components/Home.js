@@ -31,7 +31,7 @@ class Home extends PureComponent {
         <div className="App-header">
           <img src="/assets/images/logo.svg" className="App-logo" alt="logo" />
           <h2>
-            Welcome {name} to FCC VOTING APP
+            Welcome {name} to VOTING APP
           </h2>
         </div>
         <p className="App-intro">

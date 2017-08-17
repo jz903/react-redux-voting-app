@@ -15,7 +15,7 @@ exports[`Home component should render right thing and don't change unexpected 1`
     <h2>
       Welcome 
       
-       to FCC VOTING APP
+       to VOTING APP
     </h2>
   </div>
   <p

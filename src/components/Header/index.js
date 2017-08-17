@@ -24,7 +24,7 @@ class HeaderComp extends PureComponent {
         <Row gutter={16}>
           <Col className="gutter-row" span={12}>
             <h1 className="header-title">
-              <Link to="/">FCC VOTING APP</Link>
+              <Link to="/">VOTING APP</Link>
             </h1>
           </Col>
           <Col className="gutter-row header-nav" span={12}>

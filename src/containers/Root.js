@@ -45,7 +45,7 @@ class Root extends PureComponent {
               <Route path="/logout" component={Logout} />
             </Content>
             <Footer>
-              FCC VOTING APP ©2017 Chris Zhou
+              VOTING APP ©2017 Chris Zhou
             </Footer>
             <Loading />
           </Layout>
