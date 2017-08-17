@@ -62,9 +62,13 @@ router.get(
 )
 
 router.get('/logout', (req, res) => {
+  const user = req.user
+  const name = (user && user.displayName) || 'The user'
+
   req.logout()
+
   res.json({
-    success: true,
+    success: `${name} has logged out.`,
   })
 })
 
