@@ -1,6 +1,8 @@
 import passport from 'passport'
 import Strategy from 'passport-local'
-import Account from '../models/account'
+
+import User from '../models/user'
+import init from './init'
 
 const LocalStrategy = Strategy.Strategy
 
@@ -9,25 +11,20 @@ passport.use('local-signin', new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true,
 }, (req, email, password, done) => {
-  const userData = {
-    email: email.trim(),
-    password: password.trim(),
-  }
-
   // find a user by email address
-  return Account.findOne({ email: userData.email }, (err, user) => {
+  return User.findOne({ email: email.trim() }, (err, user) => {
     if (err) { return done(err) }
 
     if (!user) {
-      const error = new Error('Incorrect email or password')
-      error.name = 'IncorrectCredentialsError'
+      const error = new Error('Incorrect email')
+      error.name = 'IncorrectEmail'
 
       return done(error)
     }
 
-    if (user.password !== userData.password) {
-      const error = new Error('Incorrect email or password')
-      error.name = 'IncorrectCredentialsError'
+    if (!user.validPassword(password.trim())) {
+      const error = new Error('Incorrect password')
+      error.name = 'IncorrectPassword'
 
       return done(error)
     }
@@ -37,15 +34,7 @@ passport.use('local-signin', new LocalStrategy({
 }))
 
 // serialize user into the session
-passport.serializeUser((user, done) => {
-  done(null, user.id)
-})
-
-passport.deserializeUser((id, done) => {
-  Account.findById(id, (err, user) => {
-    done(err, user)
-  })
-})
+init()
 
 
 export default passport

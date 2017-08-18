@@ -1,7 +1,7 @@
 import express from 'express'
+import passportGithub from '../auth/github'
 import passportLocalSignup from '../auth/local-signup'
 import passportLocalSignin from '../auth/local-signin'
-import passportGithub from '../auth/github'
 import { homePageUrl } from '../utils'
 
 const router = express.Router()
@@ -32,7 +32,7 @@ router.post('/register', (req, res, next) =>
 router.post('/login', (req, res, next) =>
   passportLocalSignin.authenticate('local-signin', (err, user) => {
     if (err) {
-      if (err.name === 'IncorrectCredentialsError') {
+      if (err.name) {
         return res.status(400).json({
           error: err.name,
         })

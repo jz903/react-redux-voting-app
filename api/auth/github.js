@@ -4,6 +4,7 @@ import Strategy from 'passport-github2'
 import dotenv from 'dotenv'
 
 import User from '../models/user'
+import init from './init'
 
 const GitHubStrategy = Strategy.Strategy
 
@@ -16,7 +17,7 @@ passport.use(new GitHubStrategy({
 }, (accessToken, refreshToken, profile, done) => {
   const { displayName, username, id } = profile
   const searchQuery = {
-    username,
+    githubId: id,
   }
 
   const updates = {
@@ -40,15 +41,7 @@ passport.use(new GitHubStrategy({
 }))
 
 // serialize user into the session
-passport.serializeUser((user, done) => {
-  done(null, user.id)
-})
-
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user)
-  })
-})
+init()
 
 
 export default passport

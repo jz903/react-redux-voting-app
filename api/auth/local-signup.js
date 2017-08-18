@@ -1,6 +1,8 @@
 import passport from 'passport'
 import Strategy from 'passport-local'
-import Account from '../models/account'
+
+import User from '../models/user'
+import init from './init'
 
 const LocalStrategy = Strategy.Strategy
 
@@ -11,11 +13,12 @@ passport.use('local-signup', new LocalStrategy({
 }, (req, email, password, done) => {
   const userData = {
     email: email.trim(),
-    password: password.trim(),
     username: req.body.username,
     displayName: req.body.displayName,
   }
-  const newUser = new Account(userData)
+  const newUser = new User(userData)
+
+  newUser.password = newUser.generateHash(password.trim())
 
   return newUser.save((err, user) => {
     if (err) { return done(err) }
@@ -24,15 +27,7 @@ passport.use('local-signup', new LocalStrategy({
 }))
 
 // serialize user into the session
-passport.serializeUser((user, done) => {
-  done(null, user.id)
-})
-
-passport.deserializeUser((id, done) => {
-  Account.findById(id, (err, user) => {
-    done(err, user)
-  })
-})
+init()
 
 
 export default passport

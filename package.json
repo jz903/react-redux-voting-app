@@ -8,6 +8,7 @@
     "babel-cli": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.17.2",
     "chart.js": "^1.1.1",
     "classnames": "^2.2.5",
