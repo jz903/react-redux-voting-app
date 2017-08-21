@@ -86,8 +86,9 @@ export default store => next => action => {
       isLoading: false,
     })),
     error => next(actionWith({
+      suppressError,
       type: failureType,
-      error: !suppressError && (error.error || 'Something bad happened'),
+      error: error.error || 'Something bad happened',
       isLoading: false,
     })),
   )

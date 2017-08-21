@@ -44,7 +44,7 @@ class VoteDetail extends PureComponent {
     const isShowVoteDetail = (isVoteValid && vote.isOwner) || isNewVote
 
     return (
-      <div className="vote container">
+      <div className="vote page container">
         <Row gutter={16}>
           {isShowVoteDetail && <Col span={isVoteValid ? 14 : 24}>
             <Card

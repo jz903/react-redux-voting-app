@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { Tooltip, Icon } from 'antd'
 
 import { signUp } from '../actions/user'
-import { API_URL } from '../constants'
+import { API_URL } from '../constants/urls'
 import SignUpForm from '../components/SignUpForm'
 
 import './SignPage.css'

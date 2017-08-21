@@ -33,9 +33,9 @@ const system = (
   },
   action,
 ) => {
-  const { error, success, isLoading } = action
+  const { suppressError, error, success, isLoading } = action
 
-  if (error) {
+  if (error && !suppressError) {
     message.error(error)
   }
 

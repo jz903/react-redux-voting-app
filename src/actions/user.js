@@ -1,7 +1,7 @@
 import { replace } from 'react-router-redux'
 import { CALL_API } from '../middleware/api'
 import { Schemas } from '../constants/entities'
-import { BLACK_LIST_TO_FETCH_USER } from '../constants'
+import { BLACK_LIST_TO_FETCH_USER, AUTH_ROUTES } from '../constants/urls'
 import * as actionTypes from '../constants/actionTypes'
 
 export const updateCurrentUserId = id => ({
@@ -25,8 +25,12 @@ export const fetchUser = () => (dispatch, getState) => {
 
   if (BLACK_LIST_TO_FETCH_USER.indexOf(pathname) === -1) {
     dispatch(fetchUserRequest())
-      .then(({ response }) => {
+      .then(({ response, error }) => {
         const result = response && response.result
+
+        if (error === 'NotSignIn' && AUTH_ROUTES.indexOf(pathname) > -1) {
+          dispatch(replace('/login'))
+        }
 
         if (result) {
           dispatch(updateCurrentUserId(result))
@@ -34,6 +38,16 @@ export const fetchUser = () => (dispatch, getState) => {
       })
   }
 }
+
+export const editUser = (id, payload) => ({
+  [CALL_API]: {
+    type: actionTypes.EDIT_USER,
+    endpoint: '/user',
+    method: 'PUT',
+    payload,
+    schema: Schemas.USER,
+  },
+})
 
 // sign in request
 // Relies on the custom API middleware defined in ../middleware/api.js.

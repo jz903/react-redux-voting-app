@@ -6,7 +6,7 @@ import { Tooltip, Icon } from 'antd'
 
 import { signIn } from '../actions/user'
 import SignInForm from '../components/SignInForm'
-import { API_URL } from '../constants'
+import { API_URL } from '../constants/urls'
 import './SignPage.css'
 
 const SignInPage = props => (

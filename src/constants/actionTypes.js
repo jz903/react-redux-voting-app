@@ -1,5 +1,6 @@
 // user
 export const FETCH_USER = 'FETCH_USER'
+export const EDIT_USER = 'EDIT_USER'
 export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER'
 export const SIGNIN = 'SIGNIN'
 export const SIGNUP = 'SIGNUP'
