@@ -7,8 +7,16 @@
 }
 
 .header-nav .ant-menu {
-  float: right;
   line-height: 4rem;
+}
+
+.header-nav__middle .ant-menu {
+  display: flex;
+  justify-content: center;
+}
+
+.header-nav__right .ant-menu {
+  float: right;
 }
 
 .header-nav__login {

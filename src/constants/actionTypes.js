@@ -13,3 +13,6 @@ export const ADD_VOTE = 'ADD_VOTE'
 export const UPDATE_VOTE = 'UPDATE_VOTE'
 export const DELETE_VOTE = 'DELETE_VOTE'
 export const SUBMIT_VOTE = 'SUBMIT_VOTE'
+
+// filter
+export const UPDATE_FILTER = 'UPDATE_FILTER'

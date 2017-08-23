@@ -49,8 +49,24 @@ const system = (
   }
 }
 
+const filter = (state = {
+  user: '',
+  keyword: '',
+}, action) => {
+  switch (action.type) {
+    case ActionTypes.UPDATE_FILTER:
+      return {
+        ...state,
+        ...action.filter,
+      }
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   user,
+  filter,
   entities,
   system,
   router: routerReducer,

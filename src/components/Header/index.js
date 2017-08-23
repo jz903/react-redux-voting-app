@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { object } from 'prop-types'
+import { object, func } from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Row, Col, Layout, Menu, Icon } from 'antd'
 
@@ -9,25 +9,48 @@ const { Header } = Layout
 
 class HeaderComp extends PureComponent {
   static propTypes = {
-    user: object,
+    user: object.isRequired,
+    filter: object.isRequired,
+    updateFilter: func.isRequired,
   }
 
-  static defaultProps = {
-    user: {},
+  handleFilterChange = ({ selectedKeys }) => {
+    const { updateFilter, user } = this.props
+    const filterUserId = selectedKeys.indexOf('all-votes') > -1 ? '' : user.id
+
+    updateFilter({
+      user: filterUserId,
+    })
   }
 
   render() {
-    const { user } = this.props
+    const { user, filter } = this.props
+    const selectedKeys = filter.user ? ['your-votes'] : ['all-votes']
 
     return (
       <Header className="app-header">
         <Row gutter={16}>
-          <Col className="gutter-row" span={12}>
+          <Col className="gutter-row" span={8}>
             <h1 className="header-title">
               <Link to="/">VOTING APP</Link>
             </h1>
           </Col>
-          <Col className="gutter-row header-nav" span={12}>
+          <Col className="gutter-row header-nav header-nav__middle" span={8}>
+            <Menu
+              theme="dark"
+              mode="horizontal"
+              selectedKeys={selectedKeys}
+              onSelect={this.handleFilterChange}
+            >
+              <Menu.Item key="all-votes">
+                All Votes
+              </Menu.Item>
+              <Menu.Item key="your-votes">
+                Your Votes
+              </Menu.Item>
+            </Menu>
+          </Col>
+          <Col className="gutter-row header-nav header-nav__right" span={8}>
             {
               user.id ?
                 <Menu

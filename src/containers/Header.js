@@ -1,25 +1,18 @@
-import React from 'react'
-import { object } from 'prop-types'
 import { connect } from 'react-redux'
+
 import { getCurrentUser } from '../selectors'
 import Header from '../components/Header'
-
-const HeaderContainer = ({
-  user,
-}) => (
-  <Header user={user} />
-)
-
-HeaderContainer.propTypes = {
-  user: object,
-}
-
-HeaderContainer.defaultProps = {
-  user: {},
-}
+import { updateFilter } from '../actions/filter'
 
 const mapStateToProps = state => ({
   user: getCurrentUser(state),
+  filter: state.filter,
 })
 
-export default connect(mapStateToProps)(HeaderContainer)
+const mapDispatchToProps = dispatch => ({
+  updateFilter: filter => {
+    dispatch(updateFilter(filter))
+  },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
