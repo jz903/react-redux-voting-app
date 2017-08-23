@@ -1,6 +1,8 @@
 import React from 'react'
-import { bool, func } from 'prop-types'
-import { Modal, Button } from 'antd'
+import { object, func } from 'prop-types'
+import { Modal, Button, Popover } from 'antd'
+
+import ShareButtons from '../ShareButtons'
 
 const showConfirm = onDelete => {
   Modal.confirm({
@@ -16,29 +18,37 @@ const showConfirm = onDelete => {
 }
 
 const VoteCorner = ({
-  showDelete,
   onDelete,
-}) => (
-  <Button.Group>
-    {showDelete &&
-    <Button
-      icon="delete"
-      onClick={e => {
-        e.preventDefault()
-        showConfirm(onDelete)
-      }}
-    />}
-    <Button icon="share-alt" />
-  </Button.Group>
-)
+  vote,
+}) => {
+  const { protocol, host } = window.location
+  const voteUrl = `${protocol}//${host}/vote/${vote.id}`
+  const showDelete = vote.isOwner
+
+  return (
+    <Button.Group>
+      {showDelete &&
+      <Button
+        icon="delete"
+        onClick={e => {
+          e.preventDefault()
+          showConfirm(onDelete)
+        }}
+      />}
+      <Popover content={<ShareButtons title={vote.title} shareUrl={voteUrl} />} trigger="click">
+        <Button icon="share-alt" />
+      </Popover>
+    </Button.Group>
+  )
+}
 
 VoteCorner.propTypes = {
-  showDelete: bool,
+  vote: object,
   onDelete: func,
 }
 
 VoteCorner.defaultProps = {
-  showDelete: false,
+  vote: {},
   onDelete: () => {},
 }
 

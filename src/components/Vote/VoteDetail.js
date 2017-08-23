@@ -64,7 +64,12 @@ class VoteDetail extends PureComponent {
               <Card
                 title="Vote Detail"
                 className="box-card vote-card"
-                extra={<VoteCorner showDelete={vote.isOwner} onDelete={this.handleDelete} />}
+                extra={
+                  <VoteCorner
+                    vote={vote}
+                    onDelete={this.handleDelete}
+                  />
+                }
               >
                 <VoteStat options={vote.options} />
                 <h3 className="vote-form__title">{vote.title}</h3>

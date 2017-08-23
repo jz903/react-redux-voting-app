@@ -29,7 +29,12 @@ class VoteCard extends PureComponent {
         <Card
           title={vote.title}
           className="box-card vote-card"
-          extra={<VoteCorner showDelete={vote.isOwner} onDelete={this.handleDelete} />}
+          extra={
+            <VoteCorner
+              vote={vote}
+              onDelete={this.handleDelete}
+            />
+          }
         >
           <ul>
             {vote.options.map(option => (
