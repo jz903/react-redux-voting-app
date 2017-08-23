@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { object, func } from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Row, Col, Layout, Menu, Icon } from 'antd'
+import { Row, Col, Layout, Menu, Icon, Modal } from 'antd'
 
 import './index.css'
 
@@ -11,21 +11,37 @@ class HeaderComp extends PureComponent {
   static propTypes = {
     user: object.isRequired,
     filter: object.isRequired,
+    router: object.isRequired,
     updateFilter: func.isRequired,
+    push: func.isRequired,
   }
 
   handleFilterChange = ({ selectedKeys }) => {
-    const { updateFilter, user } = this.props
-    const filterUserId = selectedKeys.indexOf('all-votes') > -1 ? '' : user.id
+    const { updateFilter, user, push } = this.props
 
-    updateFilter({
-      user: filterUserId,
-    })
+    if (!user.id) {
+      Modal.confirm({
+        title: 'Should sign in first to see your votes',
+        okText: 'Sign in',
+        cancelText: 'Cancel',
+        iconType: 'exclamation-circle',
+        onOk() {
+          push('/login')
+        },
+      })
+    } else {
+      const filterUserId = selectedKeys.indexOf('all-votes') > -1 ? '' : user.id
+
+      updateFilter({
+        user: filterUserId,
+      })
+    }
   }
 
   render() {
-    const { user, filter } = this.props
+    const { user, filter, router } = this.props
     const selectedKeys = filter.user ? ['your-votes'] : ['all-votes']
+    const isHomepage = router.location.pathname === '/'
 
     return (
       <Header className="app-header">
@@ -36,7 +52,7 @@ class HeaderComp extends PureComponent {
             </h1>
           </Col>
           <Col className="gutter-row header-nav header-nav__middle" span={8}>
-            <Menu
+            {isHomepage && <Menu
               theme="dark"
               mode="horizontal"
               selectedKeys={selectedKeys}
@@ -48,7 +64,7 @@ class HeaderComp extends PureComponent {
               <Menu.Item key="your-votes">
                 Your Votes
               </Menu.Item>
-            </Menu>
+            </Menu>}
           </Col>
           <Col className="gutter-row header-nav header-nav__right" span={8}>
             {

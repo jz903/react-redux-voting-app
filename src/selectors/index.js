@@ -22,3 +22,18 @@ export const getCurrentVote = createSelector(
     ...votes[id],
   }),
 )
+
+const currFilter = state => state.filter
+
+export const getFilteredVotes = createSelector(
+  currFilter,
+  votesSelector,
+  (filter, votes) => Object.keys(votes)
+    .filter(key => !filter.user || votes[key].owner.id === filter.user)
+    .reduce((obj, id) => ({
+      ...obj,
+      [id]: {
+        ...votes[id],
+      },
+    }), {}),
+)
