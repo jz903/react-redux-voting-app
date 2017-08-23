@@ -1,4 +1,6 @@
 import { replace } from 'react-router-redux'
+import { message } from 'antd'
+
 import { CALL_API } from '../middleware/api'
 import { Schemas } from '../constants/entities'
 import { BLACK_LIST_TO_FETCH_USER, AUTH_ROUTES } from '../constants/urls'
@@ -39,7 +41,7 @@ export const fetchUser = () => (dispatch, getState) => {
   }
 }
 
-export const editUser = (id, payload) => ({
+export const editUserRequest = payload => ({
   [CALL_API]: {
     type: actionTypes.EDIT_USER,
     endpoint: '/user',
@@ -48,6 +50,15 @@ export const editUser = (id, payload) => ({
     schema: Schemas.USER,
   },
 })
+
+export const editUser = payload => dispatch => {
+  dispatch(editUserRequest(payload))
+    .then(({ response }) => {
+      if (response) {
+        message.success('Profile has been updated')
+      }
+    })
+}
 
 // sign in request
 // Relies on the custom API middleware defined in ../middleware/api.js.

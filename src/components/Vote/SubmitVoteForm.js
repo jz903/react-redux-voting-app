@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { string, bool, object, array, func } from 'prop-types'
+import { Link } from 'react-router-dom'
 import { Form, Button, Checkbox, Radio } from 'antd'
 
 import './SubmitVoteForm.css'
@@ -56,6 +57,9 @@ class SubmitVoteForm extends PureComponent {
         {voteOptions}
         <Form.Item>
           <Button type="primary" htmlType="submit">Submit</Button>
+          <Link to="/">
+            <Button size="large">Cancel</Button>
+          </Link>
         </Form.Item>
       </Form>
     )

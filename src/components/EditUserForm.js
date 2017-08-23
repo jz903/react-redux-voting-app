@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { object, func } from 'prop-types'
+import { Link } from 'react-router-dom'
 import { Form, Icon, Input, Button } from 'antd'
 
 class EditUserForm extends PureComponent {
@@ -20,7 +21,6 @@ class EditUserForm extends PureComponent {
   }
 
   render() {
-    const { username, email } = this.props.user
     const { getFieldDecorator } = this.props.form
     const formItemLayout = {
       labelCol: {
@@ -51,13 +51,21 @@ class EditUserForm extends PureComponent {
           {...formItemLayout}
           label="Username"
         >
-          <Input disabled value={username} prefix={<Icon type="user" />} placeholder="Pickup a username" />
+          {getFieldDecorator('username', {
+            rules: [{ required: true }],
+          })(
+            <Input prefix={<Icon type="user" />} placeholder="Pickup a username" />,
+          )}
         </Form.Item>
         <Form.Item
           {...formItemLayout}
           label="Email"
         >
-          <Input disabled value={email} prefix={<Icon type="mail" />} type="email" placeholder="Email" />
+          {getFieldDecorator('email', {
+            rules: [{ required: true }],
+          })(
+            <Input prefix={<Icon type="mail" />} type="email" placeholder="Email" />,
+          )}
         </Form.Item>
         <Form.Item
           {...formItemLayout}
@@ -73,6 +81,9 @@ class EditUserForm extends PureComponent {
           <Button type="primary" htmlType="submit">
             Update Your Profile
           </Button>
+          <Link to="/">
+            <Button size="large">Cancel</Button>
+          </Link>
         </Form.Item>
       </Form>
     )
@@ -80,9 +91,15 @@ class EditUserForm extends PureComponent {
 }
 
 const mapPropsToFields = ({ user }) => {
-  const { displayName = '' } = user
+  const { username = '', email = '', displayName = '' } = user
 
   return {
+    username: {
+      value: username,
+    },
+    email: {
+      value: email,
+    },
     displayName: {
       value: displayName,
     },
