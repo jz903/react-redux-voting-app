@@ -1,33 +1,51 @@
 import express from 'express'
 import Vote from '../models/vote'
+import User from '../models/user'
 
 const router = express.Router()
 
 router.get('/', (req, res) => {
-  const user = req.user
+  User.find({}, (err, users) => {
+    if (err) {
+      return res.status(400).send({
+        error: err.message,
+      })
+    }
 
-  Vote.find(
-    {},
-    {},
-    {
-      sort: {
-        date: -1,
+    return Vote.find(
+      {},
+      {},
+      {
+        sort: {
+          date: -1,
+        },
       },
-    },
-    (err, votes) => {
-      if (err) {
-        return res.status(400).send({
-          error: err.message,
-        })
-      }
+      (voteErr, votes) => {
+        if (voteErr) {
+          return res.status(400).send({
+            error: voteErr.message,
+          })
+        }
 
-      return res.json(
-        votes.map(vote => ({
-          ...vote.toObject(),
-          isOwner: user && (vote.owner.id === user.id),
-        })),
-      )
-    })
+        return res.json(
+          votes.map(vote => {
+            const { owner, ...rest } = vote.toObject()
+            const ownerUser = users.find(user => user.id === owner.id)
+            const ownerName = ownerUser && ownerUser.displayName
+
+            if (ownerName) {
+              owner.name = ownerName
+            }
+
+            return {
+              ...rest,
+              owner,
+              isOwner: req.user && (vote.owner.id === req.user.id),
+            }
+          }),
+        )
+      })
+  })
 })
 
 router.post('/new', (req, res) => {
@@ -45,7 +63,6 @@ router.post('/new', (req, res) => {
     })),
     owner: {
       id: req.user.id,
-      name: req.user.displayName,
     },
     ...rest,
   })

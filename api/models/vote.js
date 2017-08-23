@@ -28,7 +28,6 @@ const Vote = new Schema({
   date: { type: Date, default: Date.now },
   owner: {
     id: String,
-    name: String,
   },
 }, {
   toObject: {
