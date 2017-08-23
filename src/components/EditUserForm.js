@@ -44,9 +44,20 @@ class EditUserForm extends PureComponent {
         },
       },
     }
+    const { githubId } = this.props.user
 
     return (
       <Form onSubmit={this.handleSubmit}>
+        {githubId && <Form.Item
+          {...formItemLayout}
+          label="From Github"
+        >
+          {githubId &&
+            <p style={{ color: '#999' }}>
+              Your account information is from github which is uneditable.
+            </p>
+          }
+        </Form.Item>}
         <Form.Item
           {...formItemLayout}
           label="Username"
@@ -54,7 +65,7 @@ class EditUserForm extends PureComponent {
           {getFieldDecorator('username', {
             rules: [{ required: true }],
           })(
-            <Input prefix={<Icon type="user" />} placeholder="Pickup a username" />,
+            <Input disabled={githubId} prefix={<Icon type="user" />} placeholder="Pickup a username" />,
           )}
         </Form.Item>
         <Form.Item
@@ -74,7 +85,7 @@ class EditUserForm extends PureComponent {
           {getFieldDecorator('displayName', {
             rules: [{ required: true }],
           })(
-            <Input prefix={<Icon type="user" />} placeholder="Your full name" />,
+            <Input disabled={githubId} prefix={<Icon type="user" />} placeholder="Your full name" />,
           )}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
